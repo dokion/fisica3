@@ -1,0 +1,222 @@
+/* ============================================================================
+ *  theme.scss — camada de detalhe sobre o _brand.yml (Dokion v4.0, light)
+ *  Faz o que o brand.yml não alcança: navbar, código, blockquote, badges de RA,
+ *  caixa de Situação-Problema, pergunta orientadora, notas de margem.
+ *  Wiring em _quarto.yml:  theme: [brand, theme.scss]
+ * ========================================================================== */
+
+/*-- scss:defaults --*/
+
+// Paleta Dokion (re-declarada para uso interno do SCSS — bulletproof)
+$sienna:      #5C2A14 !default;
+$sienna-hi:   #74351A !default;
+$sienna-lo:   #451F0E !default;
+$accent-bg:   #EDE3DA !default;
+$void:        #F5F2EC !default;
+$paper-2:     #EDEAE3 !default;
+$surface:     #E4E1D9 !default;
+$raised:      #D9D6CE !default;
+$ink:         #1C1208 !default;
+$ink-2:       #46403A !default;
+$ink-3:       #8A8278 !default;
+$brasa:       #C85C2E !default;   // acento do dark do Dokion — ótimo p/ hover sobre sienna
+
+// Raios curtos (Dokion: 2/3/6px) — afiado, não "appzinho redondo"
+$border-radius:      3px !default;
+$border-radius-sm:   2px !default;
+$border-radius-lg:   6px !default;
+
+// Navbar — barra sienna profunda (a expressão mais forte da marca)
+$navbar-bg:          $sienna !default;
+$navbar-fg:          $void !default;
+$navbar-hl:          $brasa !default;
+
+// Sidebar (navegação Aulas/Listas) — papel, área de leitura clara
+$sidebar-bg:         $paper-2 !default;
+$sidebar-fg:         $ink !default;
+$sidebar-hl:         $sienna !default;
+
+// Código
+$code-color:         $sienna-lo !default;
+$code-bg:            $accent-bg !default;
+
+// Bordas
+$border-color:       rgba(28, 18, 10, 0.12) !default;
+$table-border-color: rgba(28, 18, 10, 0.10) !default;
+
+
+/*-- scss:rules --*/
+
+// ── Rótulo mono uppercase (a "etiqueta" do Dokion) ───────────────────────────
+@mixin dk-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $sienna;
+}
+
+// ── Tipografia base ──────────────────────────────────────────────────────────
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6,
+.quarto-title h1.title {
+  font-family: "EB Garamond", Georgia, serif;
+  color: $ink;
+  letter-spacing: -0.01em;
+}
+h1, .quarto-title h1.title { font-weight: 600; }
+
+// Filete sienna sob os títulos de seção
+h2 {
+  border-bottom: 1px solid rgba(92, 42, 20, 0.18);
+  padding-bottom: 0.25rem;
+}
+
+// Links — sienna, sublinhado no hover
+a       { color: $sienna; text-decoration-color: rgba(92, 42, 20, 0.35); }
+a:hover { color: $sienna-hi; text-decoration: underline; }
+
+// ── Navbar ───────────────────────────────────────────────────────────────────
+.navbar { border-bottom: 3px solid $sienna-lo; }
+.navbar-title {
+  font-family: "EB Garamond", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+// ── Código ───────────────────────────────────────────────────────────────────
+code:not(.sourceCode), .code-inline {
+  font-family: "IBM Plex Mono", monospace;
+  color: $sienna-lo;
+  background: $accent-bg;
+  padding: 0.10em 0.35em;
+  border-radius: 2px;
+  font-size: 0.88em;
+}
+div.sourceCode {
+  background: $surface;
+  border: 1px solid rgba(28, 18, 10, 0.08);
+  border-radius: 6px;
+}
+pre.sourceCode { font-family: "IBM Plex Mono", monospace; font-size: 0.85rem; }
+
+// ── Blockquote ───────────────────────────────────────────────────────────────
+blockquote {
+  border-left: 3px solid $sienna;
+  color: $ink-2;
+  font-family: "EB Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+// ── Badge de RA  →  shortcode {{< ra RA3 B4 >}} ──────────────────────────────
+.ra-badges { display: inline-flex; gap: 4px; vertical-align: baseline; }
+.ra-badge {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72em;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 0.08em 0.45em;
+  border-radius: 2px;
+  line-height: 1.5;
+}
+.ra-badge.ra-ra {                 // o RA — contornado
+  color: $sienna;
+  background: $accent-bg;
+  border: 1px solid rgba(92, 42, 20, 0.30);
+}
+.ra-badge.ra-bloom {              // o nível Bloom — sólido
+  color: $void;
+  background: $sienna;
+}
+
+// ── Badge de Aula  →  shortcode {{< aula 3-4 >}} ─────────────────────────────
+// Marca onde um encontro (par de aulas) começa dentro de um tópico.
+.aula-badge {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  display: inline-block;
+  color: $void;
+  background: $sienna;
+  padding: 0.25em 0.7em;
+  border-radius: 2px;
+  border-left: 3px solid $brasa;
+  margin: 0.25rem 0;
+}
+
+// ── Caixa de Situação-Problema  →  ::: {.sp} ─────────────────────────────────
+.sp {
+  position: relative;
+  background: $paper-2;
+  border-left: 4px solid $sienna;
+  border-radius: 0 6px 6px 0;
+  padding: 1.25rem 1.4rem 1rem;
+  margin: 1.5rem 0;
+}
+.sp::before { @include dk-label; content: "Situação-Problema"; display: block; margin-bottom: 0.6rem; }
+.sp > :last-child { margin-bottom: 0; }
+
+// ── Pergunta orientadora  →  ::: {.pergunta} ─────────────────────────────────
+.pergunta {
+  background: $accent-bg;
+  border: 1px solid rgba(92, 42, 20, 0.16);
+  border-radius: 6px;
+  padding: 1rem 1.2rem;
+  margin: 1.25rem 0;
+}
+.pergunta::before { @include dk-label; content: "Para explorar →"; display: block; margin-bottom: 0.4rem; }
+.pergunta > :last-child { margin-bottom: 0; }
+
+// ── Notas de margem (Quarto .column-margin) — onde os códigos de RA brilham ──
+.column-margin {
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: $ink-2;
+}
+.column-margin .ra-badges { margin-top: 0.2rem; }
+
+// ── Callouts — tom quente + etiqueta mono ────────────────────────────────────
+.callout { border-radius: 6px; }
+.callout .callout-title { font-family: "IBM Plex Mono", monospace; letter-spacing: 0.02em; }
+
+// ── Tabelas ──────────────────────────────────────────────────────────────────
+.table > thead {
+  background: $paper-2;
+  border-bottom: 2px solid rgba(92, 42, 20, 0.25);
+}
+
+// ── Responsividade / mobile ──────────────────────────────────────────────────
+// Nada pode estourar a largura da viewport e criar rolagem horizontal da página.
+html, body { overflow-x: hidden; }
+
+// Equações de display (MathJax) rolam dentro de si em vez de empurrar a página
+.math.display { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+
+// Código, imagens e saídas de célula respeitam a largura
+pre.sourceCode { overflow-x: auto; }
+p img, figure img, .cell-output-display img, .figure img { max-width: 100%; height: auto; }
+
+// Tabelas largas (blueprints/calendário do syllabus) rolam na horizontal no celular
+@media (max-width: 640px) {
+  .table, .cell-output-display > table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  h1, .quarto-title h1.title { font-size: 1.5rem; line-height: 1.2; }
+  h2 { font-size: 1.25rem; }
+  body { font-size: 0.95rem; }
+
+  // caixas didáticas com respiro menor em telas estreitas
+  .sp      { padding: 1rem 0.95rem 0.8rem; }
+  .pergunta { padding: 0.85rem 0.95rem; }
+
+  // não deixar palavras/fórmulas longas empurrarem o texto
+  p, li { overflow-wrap: break-word; }
+}

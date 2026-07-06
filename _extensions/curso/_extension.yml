@@ -1,0 +1,8 @@
+title: Curso — Shortcodes
+author: CIABA
+version: 1.0.0
+quarto-required: ">=1.4.0"
+contributes:
+  shortcodes:
+    - ra.lua
+    - aula.lua

@@ -1,0 +1,39 @@
+project:
+  type: website
+  output-dir: _site
+  resources:
+    - libs/
+
+website:
+  title: "Física 3 — CIABA"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Syllabus
+  sidebar:
+    style: docked
+    search: true
+    contents:
+      - href: index.qmd
+        text: Syllabus
+      - section: "UE 1 — Eletrostática"
+        contents: unidades/unidade-1-eletrostatica/*.qmd
+      - section: "UE 2 — Corrente Elétrica"
+        contents: unidades/unidade-2-corrente-eletrica/*.qmd
+      - section: "UE 3 — Campo Magnético"
+        contents: unidades/unidade-3-campo-magnetico/*.qmd
+      - section: "UE 4 — Circuitos e Materiais Magnéticos"
+        contents: unidades/unidade-4-circuitos-materiais-magneticos/*.qmd
+
+format:
+  html:
+    theme: [brand, theme.scss]
+    toc: true
+    toc-title: "Nesta página"
+    number-sections: false
+    lang: pt-BR
+    html-math-method: mathjax
+
+execute:
+  echo: true
+  warning: false

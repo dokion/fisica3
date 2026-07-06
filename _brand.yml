@@ -1,0 +1,73 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# _brand.yml — Identidade do curso, herdada do Dokion (v4.0, tema light)
+# Um só arquivo → HTML, PDF (Typst), dashboards e slides.
+# Coloque na RAIZ do projeto Quarto. O Quarto detecta e aplica automaticamente.
+# ─────────────────────────────────────────────────────────────────────────────
+
+meta:
+  name: "Física — CIABA"
+  # link: https://usuario.github.io/fisica-3
+
+color:
+  palette:
+    # Superfícies — papel terracota
+    void:       "#F5F2EC"   # fundo da página
+    paper-2:    "#EDEAE3"   # sidebar / fundo alternativo
+    surface:    "#E4E1D9"   # cards, blocos de código
+    raised:     "#D9D6CE"   # elementos elevados
+    # Texto — tinta quente (não navy)
+    ink:        "#1C1208"   # texto principal
+    ink-2:      "#46403A"   # texto secundário
+    ink-3:      "#8A8278"   # labels, placeholders
+    # Acento — sienna profundo
+    sienna:     "#5C2A14"   # acento primário (AA sobre claro)
+    sienna-hi:  "#74351A"   # hover
+    sienna-lo:  "#451F0E"   # pressed
+    accent-bg:  "#EDE3DA"   # fundo sienna sutil
+    # Semânticos
+    positive:   "#2A5E3C"
+    negative:   "#7A1E1E"
+  background: void
+  foreground: ink
+  primary:    sienna
+  secondary:  ink-2
+  success:    positive
+  danger:     negative
+  warning:    sienna
+
+typography:
+  fonts:
+    # source: google → funciona online e no gh-pages.
+    # Para o pendrive OFFLINE, troque para source: file (ver LEIA-ME § Fontes offline).
+    - family: EB Garamond
+      source: google
+      weight: [400, 500, 600, 700]
+      style: [normal, italic]
+    - family: DM Sans
+      source: google
+      weight: [300, 400, 500, 600]
+      style: [normal, italic]
+    - family: IBM Plex Mono
+      source: google
+      weight: [400, 500]
+  base:
+    family: DM Sans
+    size: 17px
+    line-height: 1.7
+  headings:
+    family: EB Garamond
+    weight: 600
+    color: ink
+  monospace:
+    family: IBM Plex Mono
+  monospace-inline:
+    color: sienna
+    background-color: accent-bg
+  monospace-block:
+    background-color: surface
+  link:
+    color: sienna
+
+# logo:
+#   # logo do CURSO / CIABA (não o do Dokion). Coloque em img/ e descomente.
+#   small: img/logo.png

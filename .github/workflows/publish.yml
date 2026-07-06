@@ -1,0 +1,57 @@
+# .github/workflows/publish.yml
+# Renderiza o Quarto NA NUVEM e publica no GitHub Pages a cada push.
+# Você nunca renderiza local: edita .qmd → commit → o site atualiza.
+# Pré-requisito (uma vez): Settings → Pages → Source = "GitHub Actions".
+
+name: Quarto Publish
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:          # botão "Run workflow" pra rodar na mão
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      # ── Notas executam blocos {python} (matplotlib p/ paridade PDF) ──
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install deps
+        run: pip install jupyter matplotlib numpy
+
+      - name: Render
+        uses: quarto-dev/quarto-actions/render@v2
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site            # output-dir padrão do projeto website
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
