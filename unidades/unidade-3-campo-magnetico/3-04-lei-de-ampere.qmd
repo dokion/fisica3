@@ -1,0 +1,94 @@
+---
+title: "3.4 — Lei de Ampère: condutor retilíneo, solenoide e toroide"
+categories: [UE3, OE3.4-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 3.4 [B3] Apresentar e interpretar a Lei de Ampère, aplicando-a nos casos de
+            simetria: campo de um condutor retilíneo, campo em um solenóide e campo
+            em um toróide
+            → naval: Solenoides de válvulas e contactores; bobinas de máquinas
+              elétricas
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 39-40 >}}
+
+A Lei de Ampère está para Biot–Savart como Gauss está para Coulomb: a mesma física em
+forma global, que resolve em três linhas os casos com simetria. E o caso-mestre dela —
+o solenoide — é provavelmente o componente eletromagnético mais numeroso do navio:
+cada válvula solenoide, cada contactor, cada relé tem um.
+
+## A lei {{< ra OE3.4 B3 >}}
+
+A circulação de $\vec B$ ao longo de qualquer curva fechada é proporcional à corrente
+**que atravessa** a curva:
+
+$$\boxed{\oint \vec{B}\cdot d\vec{l} = \mu_0\,i_{\text{env}}}$$
+
+(sinal pela regra da mão direita no sentido de percurso). Correntes fora da curva
+contribuem campo, mas circulação líquida zero — como as cargas externas em Gauss. A
+lei vira ferramenta quando a simetria permite tirar $B$ da integral.
+
+## Os três casos de prova
+
+**Condutor retilíneo** (amperiana = círculo de raio $R$):
+
+$$B \cdot 2\pi R = \mu_0 i \quad\Rightarrow\quad B = \frac{\mu_0 i}{2\pi R}$$
+
+— Biot–Savart confirmado sem nenhuma integral trabalhosa. (Dentro de um condutor
+maciço de raio $a$: $i_{\text{env}} \propto R^2$ e $B = \mu_0 i R/2\pi a^2$, crescendo
+linear até a superfície.)
+
+**Solenoide** (bobina longa, $n$ espiras por metro): a amperiana retangular com um
+lado dentro e um fora, onde $B \approx 0$, dá $B\,\ell = \mu_0 (n\ell) i$:
+
+$$B = \mu_0\,n\,i \qquad \text{(uniforme no interior, quase nulo fora)}$$
+
+O solenoide é o "capacitor do magnetismo": campo **uniforme e confinado**, controlado
+por dois parâmetros de projeto ($n$, $i$). Com um núcleo de ferro dentro, o campo
+multiplica por centenas (UE 4) — e um êmbolo ferromagnético é **puxado para dentro**
+da bobina energizada: eis a válvula solenoide, o contactor e o relé (a âncora
+§2.1.3.8: elementos manipuladores dos sistemas de controle). O clique do quadro
+elétrico é a Lei de Ampère fechando um contato.
+
+**Toroide** ($N$ espiras num anel de raio médio $r$): amperiana = círculo interno,
+
+$$B = \frac{\mu_0\,N\,i}{2\pi r} \qquad \text{(campo confinado ao interior do anel; fora, zero)}$$
+
+É o solenoide mordendo o próprio rabo — a geometria dos núcleos de transformadores
+toroidais e reatores: fluxo 100% contido, mínima interferência sobre o resto do
+quadro (e sobre o compasso, tópico 3.3).
+
+::: {.callout-warning}
+**Erro clássico:** achar que $B$ nulo na amperiana implica corrente nula (ou
+vice-versa). A lei liga a **circulação** à corrente envolvida — fora do toroide a
+circulação é zero porque as correntes que furam a curva se cancelam, não porque não
+haja campo algum de cada espira. Como em Gauss: a lei vale sempre, *resolve* só com
+simetria.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: D3.js (tabela Q4 — campo com precisão): cortes com linhas de
+     B do fio, do solenoide (curto × longo, mostrando a uniformização) e do toroide;
+     amperiana desenhável com o valor de ∮B·dl vs μ0·i_env conferido numericamente.
+     Paridade matplotlib no {python}: B(x) ao longo do eixo do solenoide. -->
+
+::: {.sp}
+A bobina de um contactor de 440 V tem 1 200 espiras em 6,0 cm de comprimento
+($n = 20\,000$ esp/m) e opera com 0,15 A.
+
+**(a) Modelagem:** solenoide longo: $B = \mu_0 n i$ (núcleo de ar, êmbolo ainda
+fora).
+
+**(b) Desenvolvimento:**
+$$B = 4\pi{\times}10^{-7} \times 20\,000 \times 0{,}15 = 3{,}8{\times}10^{-3}\,\text{T}$$
+
+**(c) Resultado:** ≈ 3,8 mT no interior — 75 vezes o campo da Terra, num volume de
+centímetros.
+
+**(d) Análise crítica:** parece pouco perto do 1 T de um motor, mas o êmbolo de
+ferro, ao entrar, multiplica o fluxo pela permeabilidade relativa do material
+(UE 4) — a força de tração real vem dessa amplificação. Nota de projeto: quando o
+êmbolo fecha, o circuito magnético muda e a corrente da bobina **cai** em CA — um
+contactor travado a meio curso queima a bobina exatamente por não deixar essa queda
+acontecer.
+:::

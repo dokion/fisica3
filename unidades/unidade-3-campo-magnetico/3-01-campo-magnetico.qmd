@@ -1,0 +1,75 @@
+---
+title: "3.1 — Campo magnético e suas aplicações"
+categories: [UE3, OE3.1-B1]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 3.1 [B1] Apresentar e definir Campo magnético, citando suas aplicações
+            → naval: Campo magnético da Terra; princípio do compasso magnético
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 35-36 >}}
+
+O instrumento de navegação mais antigo ainda obrigatório a bordo — o compasso
+magnético — funciona porque o planeta inteiro é um ímã e a agulha é outro. Este tópico
+define o campo magnético $\vec B$, apresenta suas fontes e cataloga onde ele trabalha
+no navio: do compasso aos motores, dos contactores ao ensaio de trincas.
+
+## O campo magnético {{< ra OE3.1 B1 >}}
+
+Assim como a carga cria $\vec E$, **cargas em movimento** (correntes) e **ímãs** criam
+o campo magnético $\vec B$. Ele se define pela força que exerce sobre uma carga de
+prova em movimento:
+
+$$\vec{F} = q\,\vec{v} \times \vec{B}
+\qquad [\text{tesla: } 1\,\text{T} = 1\,\text{N/(A·m)}]$$
+
+O produto vetorial (FIS-1, regra da mão direita) carrega as três marcas registradas
+do magnetismo:
+
+- a força é **perpendicular** a $\vec v$ e a $\vec B$ — nunca acelera o módulo da
+  velocidade, só curva a trajetória (não realiza trabalho!);
+- só age sobre carga **em movimento**: carga parada não sente $\vec B$;
+- ordens de grandeza: campo da Terra ~$0{,}5{\times}10^{-4}$ T (0,5 gauss); ímã de
+  ferrite ~0,01 T; entreferro de motor ~1 T.
+
+**Linhas de campo:** saem do polo norte, entram no sul, e — diferença crucial para o
+$\vec E$ — **sempre se fecham**: não existe "carga magnética" isolada; cortar um ímã
+dá dois ímãs. Polos iguais se repelem, opostos se atraem (a lei literal do 7.03
+§1.1.5.1).
+
+## O ímã planeta e o compasso
+
+A Terra tem campo aproximadamente dipolar (gerado por correntes no núcleo), com os
+polos magnéticos **deslocados** dos geográficos. A componente horizontal do campo é o
+que orienta a agulha; daí as três verdades operacionais do compasso:
+
+- **Declinação** (variação): o norte magnético não é o verdadeiro — a diferença vem
+  na rosa da carta náutica, com sua taxa anual;
+- **Inclinação** (dip): perto dos polos magnéticos o campo mergulha e a componente
+  horizontal míngua — o compasso "morre" em latitudes altas;
+- **Desvio**: o aço e os circuitos do próprio navio somam seu campo ao da Terra
+  (tópicos 3.3 e UE 4 — é a física da curva de desvios e das esferas compensadoras).
+
+## Catálogo de aplicações de bordo
+
+- **Compasso magnético** (navegação — o instrumento que dá nome à âncora IMO);
+- **Máquinas elétricas**: todo motor e gerador é força/indução magnética (3.2, 3.5,
+  3.7);
+- **Atuadores**: contactores, relés, válvulas solenoides, freios eletromagnéticos;
+- **Instrumentação**: sensores de proximidade, medidores de torque magnetoelásticos;
+- **Manutenção**: ensaio por partículas magnéticas revela trincas em peças
+  ferromagnéticas — o campo "vaza" na descontinuidade.
+
+::: {.callout-warning}
+**Erro clássico:** desenhar a força magnética paralela ao campo. $\vec F = q\vec v
+\times \vec B$ é perpendicular **aos dois** — quem "aponta ao longo de B" é a agulha
+do compasso (um dipolo alinhando), não a força sobre uma carga em movimento. São dois
+fenômenos diferentes do mesmo campo.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: p5.js (tabela Q4 — movimento): carga lançada em campo B
+     uniforme (sai da tela/entra na tela) com trajetória circular/helicoidal e
+     vetores v, B, F desenhados; modo 2: agulha de compasso alinhando com campo
+     resultante Terra + perturbação. Paridade matplotlib no {python}: trajetória
+     circular com os vetores. -->

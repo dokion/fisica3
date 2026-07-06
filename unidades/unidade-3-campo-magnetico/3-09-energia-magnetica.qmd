@@ -1,0 +1,66 @@
+---
+title: "3.9 — Energia magnética"
+categories: [UE3, OE3.9-B2]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 3.9 [B2] Conceituar energia magnética e compreender seu papel em circuitos com
+            indutores
+            → naval: Energia em bobinas de contactores; arco na abertura de
+              circuitos indutivos
+═══════════════════════════════════════════════════════════════════════ -->
+
+De onde sai a energia do arco do tópico anterior? Estava **armazenada no campo
+magnético** da bobina — exatamente como o capacitor guardava energia no campo
+elétrico. Este tópico fecha a unidade com essa contabilidade, e com uma simetria que
+organiza tudo o que veio antes.
+
+## A energia do indutor {{< ra OE3.9 B2 >}}
+
+Para estabelecer corrente num indutor, a fonte trabalha contra a f.e.m. de
+auto-indução: $P = i\,\varepsilon_L = L\,i\,\dfrac{di}{dt}$. Integrando de 0 a $i$:
+
+$$U_B = \int_0^i L\,i'\,di' \;\Longrightarrow\; \boxed{U_B = \tfrac{1}{2}L\,i^2}$$
+
+— o espelho perfeito de $U_E = \tfrac12 CV^2$ (tópico 1.7), com o indutor guardando
+na **corrente** o que o capacitor guarda na **tensão**. Enquanto a corrente circula,
+a energia está lá; interrompida bruscamente, ela **precisa sair** — e sai como arco,
+como sobretensão, ou (bem projetado) como decaimento suave no diodo de roda livre.
+
+## A energia mora no campo
+
+Para o solenoide ($L = \mu_0 n^2 \ell A$, $B = \mu_0 n i$), substituindo:
+
+$$U_B = \tfrac12\,\mu_0 n^2 \ell A\,i^2
+= \frac{B^2}{2\mu_0}\,\underbrace{(\ell A)}_{\text{volume}}$$
+
+$$\Rightarrow\quad u_B = \frac{B^2}{2\mu_0} \;\;[\text{J/m}^3]
+\qquad\text{ao lado de}\qquad
+u_E = \frac{\varepsilon_0 E^2}{2}$$
+
+A energia é do **campo**, distribuída no espaço — não "do fio". As duas densidades
+lado a lado são o resumo do curso até aqui e a ponte para FIS-3 adiante: uma onda
+eletromagnética (o pulso do radar) é exatamente essas duas parcelas viajando juntas.
+
+## Ordens de grandeza de bordo
+
+- **Bobina de contactor** (tópico 3.8): $\tfrac12 \times 1{,}2 \times 0{,}10^2 =
+  6$ mJ — pouco, mas concentrado em milissegundos numa fresta de contato: arco;
+- **Enrolamento de campo de um alternador** ($L \sim 1$ H, $i \sim 100$ A):
+  $\tfrac12 \times 1 \times 100^2 = 5$ kJ — a razão de o circuito de excitação ter
+  resistor de descarga próprio: 5 kJ sem caminho controlado destroem o regulador;
+- **Entreferro de um motor** ($B \approx 1$ T): $u_B = 1/(2 \times 4\pi{\times}10^{-7})
+  \approx 4{\times}10^5$ J/m³ — 400 kJ por metro cúbico de campo, a "mola magnética"
+  que transmite o torque entre estator e rotor.
+
+::: {.callout-warning}
+**Erro clássico:** achar que indutor desligado é indutor inofensivo. É o **oposto do
+capacitor**: o capacitor é perigoso *desligado e carregado* (guarda tensão); o
+indutor é perigoso **no instante do desligamento** (a corrente que ainda flui carrega
+½Li² procurando saída). Cada um exige seu ritual de bancada.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Plotly (tabela Q4): barras de energia ½Li² e ½CV² lado a
+     lado durante transientes RL e RC sincronizados — o "espelho" capacitor/indutor
+     visível; modo 2: u_B(B) = B²/2μ0 com marcadores (Terra, contactor, entreferro
+     de motor). Paridade matplotlib no {python}. -->

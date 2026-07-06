@@ -1,0 +1,104 @@
+---
+title: "3.8 — Indutância mútua e auto-indutância; circuitos RL"
+categories: [UE3, OE3.8-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 3.8 [B3] Apresentar o funcionamento dos indutores: indutância, associações,
+            circuitos RL livres e forçados; auto-indutância
+            → naval: Reatância indutiva; enrolamentos de máquinas como indutores
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 45-46 >}}
+
+Todo enrolamento do navio — de motor, de gerador, de transformador, de contactor — é
+um **indutor**: um componente que odeia mudança de corrente. Essa teimosia tem nome
+(indutância), unidade (henry) e uma EDO gêmea da do RC. Entendê-la é entender por que
+abrir um circuito indutivo dá faísca e por que a corrente CA "enxerga" bobinas como
+resistência extra.
+
+## Auto-indutância {{< ra OE3.8 B3 >}}
+
+A corrente de uma bobina cria fluxo **através dela mesma** ($N\Phi_B \propto i$).
+Define-se a **auto-indutância**:
+
+$$L = \frac{N\,\Phi_B}{i} \qquad [\text{henry: } 1\,\text{H} = 1\,\text{Wb/A}]$$
+
+Se $i$ varia, Faraday age sobre a própria bobina:
+
+$$\boxed{\varepsilon_L = -L\,\frac{di}{dt}}$$
+
+— a f.e.m. **contra a variação** (Lenz): o indutor freia subidas e sustenta descidas
+de corrente. Para o solenoide do tópico 3.4 ($n$ esp/m, comprimento $\ell$, área $A$),
+o cálculo é imediato: $\Phi_B = \mu_0 n i A$ por espira e $N = n\ell$:
+
+$$L = \mu_0\,n^2\,\ell\,A$$
+
+— cresce com o **quadrado** da densidade de espiras (e multiplicado por um núcleo de
+ferro, UE 4).
+
+**Indutância mútua:** o fluxo de uma bobina atravessando outra vizinha acopla as
+duas: $\varepsilon_2 = -M\,di_1/dt$. É o princípio do transformador (UE 4) — e também
+do acoplamento indesejado entre cabos paralelos (diafonia em cabos de instrumentação;
+por isso sinal e potência correm em bandejas separadas).
+
+**Associações** (sem acoplamento): como resistores — série soma
+($L_{\text{eq}} = L_1 + L_2$), paralelo soma inversos.
+
+## Circuitos RL: as mesmas exponenciais do RC
+
+**Resposta forçada** (fonte $\varepsilon$ sobre $R$ e $L$ em série):
+
+$$\varepsilon = Ri + L\frac{di}{dt}
+\quad\Longrightarrow\quad
+i(t) = \frac{\varepsilon}{R}\left(1 - e^{-t/\tau}\right), \qquad \tau = \frac{L}{R}$$
+
+**Resposta livre** (curto sobre RL com corrente inicial $i_0$):
+$i(t) = i_0\,e^{-t/\tau}$.
+
+O dicionário com o tópico 2.6 é exato — trocando quem "teima": o capacitor teima na
+**tensão** (parte como curto, termina aberto); o indutor teima na **corrente**
+(parte como aberto — corrente não salta —, termina como fio). Mesmos 63% em $\tau$,
+mesmos 5$\tau$ práticos.
+
+## A consequência de bancada: o arco de abertura
+
+Abrir a chave de um circuito indutivo força $di/dt \to$ enorme — e
+$\varepsilon_L = -L\,di/dt$ dispara para **centenas ou milhares de volts**, rompendo
+o ar do contato: **arco elétrico**. É por isso que:
+
+- contactores têm câmaras de extinção de arco (o clique tem engenharia dentro);
+- bobinas de relés em CC levam **diodo de roda livre** dando caminho à corrente;
+- nunca se abre um seccionador sob carga indutiva sem o disjuntor antes.
+
+A energia do arco é a energia armazenada no campo da bobina — a deixa exata do
+tópico 3.9.
+
+<!-- SIMULAÇÃO SUGERIDA: Plotly (tabela Q4): energização RL — i(t) e v_L(t) com
+     sliders de L e R (τ = L/R visível); modo 2: abertura do circuito com pico de
+     tensão −L·di/dt em função da rapidez da abertura, com e sem diodo de roda
+     livre. Parâmetros: L 0,1–10 H (bobina de contactor), R 10–500 Ω.
+     Paridade matplotlib no {python}. -->
+
+::: {.sp}
+A bobina de um contactor tem $L = 1{,}2$ H e $R = 240\ \Omega$, alimentada em 24 V CC.
+
+**(a) Modelagem:** RL forçado: $i_\infty = \varepsilon/R$; $\tau = L/R$.
+
+**(b) Desenvolvimento:**
+$$i_\infty = \frac{24}{240} = 0{,}10\,\text{A}
+\qquad
+\tau = \frac{1{,}2}{240} = 5{,}0\,\text{ms}$$
+
+Na abertura, se o contato interrompe em ~0,1 ms:
+$|\varepsilon_L| \approx L\frac{\Delta i}{\Delta t} = 1{,}2 \times \frac{0{,}10}{10^{-4}} = 1200\,\text{V}$
+
+**(c) Resultado:** a bobina de 24 V gera um pico da ordem de **1,2 kV** ao ser
+desligada abruptamente.
+
+**(d) Análise crítica:** os 50× da tensão nominal explicam contatos erodidos e
+transientes que "resetam" eletrônica vizinha. Com diodo de roda livre, a corrente
+decai suavemente com τ = 5 ms e o pico morre — um componente de centavos aplicando
+$\varepsilon_L = -L\,di/dt$ a favor. Distrator clássico: achar que 24 V "não dá
+choque"; a indutância guarda surpresas.
+:::

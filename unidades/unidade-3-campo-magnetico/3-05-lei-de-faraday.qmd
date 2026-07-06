@@ -1,0 +1,79 @@
+---
+title: "3.5 — Lei de Faraday: indução e as regras de mão"
+categories: [UE3, OE3.5-B1]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 3.5 [B1] Conceituar a lei de Faraday
+            → naval: Indução: fluxo, espiras e taxa de corte — o coração do gerador
+              de bordo
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 41-42 >}}
+
+Até aqui, corrente cria campo. Faraday descobriu a via de volta: **campo variando cria
+corrente** — e dessa via de volta sai toda a energia elétrica do navio: os geradores
+não fazem outra coisa senão variar fluxo magnético através de bobinas, milhões de
+vezes por viagem.
+
+## Fluxo magnético e a lei {{< ra OE3.5 B1 >}}
+
+O **fluxo magnético** através de uma superfície (como o fluxo elétrico de Gauss):
+
+$$\Phi_B = \int \vec{B}\cdot d\vec{A} \qquad [\text{weber: } 1\,\text{Wb} = 1\,\text{T·m}^2]$$
+
+**Lei de Faraday:** varia o fluxo através de um circuito, aparece f.e.m. induzida
+proporcional à **taxa** de variação; com $N$ espiras:
+
+$$\boxed{\varepsilon = -N\,\frac{d\Phi_B}{dt}}$$
+
+(o sinal negativo é a Lei de Lenz — tópico 3.6). Não importa **como** o fluxo varia,
+e cada modo é um equipamento:
+
+- $B$ variando no tempo → **transformador** (UE 4);
+- área ou orientação variando → **gerador rotativo** (espira girando: tópico 3.7);
+- condutor "cortando" linhas de campo → **f.e.m. de movimento**.
+
+Os três controles do projetista são literais na âncora IMO (7.04 §2.1.1.2 obj.
+2.2–2.4): a f.e.m. cresce com a **densidade de fluxo**, com o **número de espiras** e
+com a **taxa de corte** — os três botões de qualquer gerador.
+
+## F.e.m. de movimento: a dedução mínima
+
+Barra condutora de comprimento $L$ deslizando com velocidade $v$ perpendicular a
+$\vec B$: cada portador sente $F = qvB$, acumulando carga nas pontas até o campo
+elétrico interno equilibrar. A ddp resultante:
+
+$$\varepsilon = B\,L\,v$$
+
+— a fórmula-semente ("e = Blv", como aparece no extrato do 7.04) da qual o tópico 3.7
+constrói o gerador girante e a UE 4 tira o $e = E_{\max}\sin\omega t$ da rede de
+bordo.
+
+## As regras de mão
+
+Para **sentidos**, o kit completo (a Parte B do sumário as pede nominalmente):
+
+- **Mão direita (Fleming, efeito gerador):** polegar = **M**ovimento, indicador =
+  campo (**B**), médio = corrente **I**nduzida;
+- **Mão esquerda (Fleming, efeito motor):** os mesmos dedos, com o polegar dando a
+  **F**orça (tópico 3.2);
+- **Mão direita "de agarrar":** polegar na corrente, dedos no sentido de $\vec B$
+  em torno do fio (3.3) — ou dedos na corrente da bobina, polegar no norte do
+  solenoide (3.4).
+
+Memorização honesta: **geradores usam a direita** (movimento gera corrente), motores
+a esquerda (corrente gera movimento) — g**eR**ador/di**R**eita.
+
+::: {.callout-warning}
+**Erro clássico:** "campo forte induz f.e.m.". Fluxo **constante**, por maior que
+seja, induz **zero** — só a *variação* conta. Um alternador parado dentro do melhor
+campo do mundo não acende uma lâmpada; girando devagar, acende pouco: $\varepsilon
+\propto d\Phi/dt$, e por isso a frequência e a tensão do gerador sobem juntas com a
+rotação.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: p5.js (tabela Q4 — movimento): barra deslizando sobre
+     trilhos em campo B com galvanômetro, sliders de B, L, v mostrando ε = BLv ao
+     vivo; modo 2: ímã entrando/saindo de bobina com N ajustável — o experimento de
+     Faraday clássico. Paridade matplotlib no {python}: ε(t) para v(t) senoidal. -->

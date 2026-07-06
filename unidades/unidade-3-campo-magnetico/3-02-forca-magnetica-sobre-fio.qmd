@@ -1,0 +1,90 @@
+---
+title: "3.2 — Força magnética em um fio percorrido por corrente"
+categories: [UE3, OE3.2-B2]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 3.2 [B2] Apresentar e interpretar a Equação da força magnética sobre um fio
+            → naval: Regras de Fleming; princípio do motor elétrico
+═══════════════════════════════════════════════════════════════════════ -->
+
+Se o campo magnético empurra cargas em movimento, então empurra **fios com corrente** —
+que são exatamente isso, cargas em deriva organizada. Essa observação de uma linha é o
+princípio de todos os motores elétricos do navio: das bombas de lastro ao cabrestante.
+
+## Da carga ao fio {{< ra OE3.2 B2 >}}
+
+Num trecho de fio de comprimento $L$, seção $A$, com $n$ portadores por volume em
+deriva $v_d$, a força magnética total é a soma sobre todos os portadores:
+
+$$F = (nAL)\,\underbrace{q\,v_d\,B}_{\text{força por portador}}
+= \underbrace{(n\,q\,v_d\,A)}_{i}\,L\,B$$
+
+$$\boxed{\vec{F} = i\,\vec{L}\times\vec{B}}
+\qquad (F = BiL\sin\theta)$$
+
+com $\vec L$ no sentido da corrente. Máxima com fio perpendicular ao campo
+($\theta = 90°$), nula com fio paralelo. Para fios curvos ou campos variáveis,
+integra-se por elementos: $d\vec F = i\,d\vec l \times \vec B$.
+
+**A regra de Fleming da mão esquerda** (motor) organiza os três dedos: **F**orça no
+polegar, campo (**B**) no indicador, corrente (**I**) no médio — mutuamente
+perpendiculares. É a regra que a âncora IMO exige literalmente ("uses Fleming's hand
+rules to determine the directions of magnetic field, motion and current", 7.04
+§2.1.1.3 obj.1.1); a da mão **direita** é a gêmea para o gerador (tópico 3.5).
+
+## A espira: força zero, torque não
+
+Uma espira retangular com corrente num campo uniforme tem forças que se cancelam aos
+pares — mas formam um **binário** (FIS-1, 1.2): os dois lados perpendiculares ao
+campo são empurrados em sentidos opostos, com braço. O torque resultante:
+
+$$\tau = N\,B\,i\,A\,\sin\theta
+\qquad\text{ou}\qquad
+\vec\tau = \vec\mu \times \vec B, \quad \mu = N\,i\,A$$
+
+($N$ espiras, área $A$, $\vec\mu$ = momento de dipolo magnético, normal à espira).
+Compare com o dipolo elétrico do tópico 1.2: **mesma equação**, $\vec p \to \vec\mu$.
+A espira gira para alinhar $\vec\mu$ com $\vec B$ — e três máquinas nascem daí:
+
+- **O motor elétrico**: mantém o torque sempre no mesmo sentido invertendo a corrente
+  a cada meia-volta (comutador, em CC) ou girando o próprio campo (motores de indução
+  CA — a UE 4 completa). Rotor de bomba, de ventilador, de guincho: tudo é espira
+  torquada;
+- **O galvanômetro**: contra uma mola, o ângulo de deflexão mede $i$ — o ancestral de
+  todo instrumento analógico de painel;
+- **A agulha do compasso**: um $\vec\mu$ permanente alinhando com o campo da Terra —
+  o mesmo torque, sem corrente.
+
+::: {.callout-warning}
+**Erro clássico:** aplicar $F = BiL$ esquecendo o $\sin\theta$, ou usar a mão errada.
+Disciplina de bancada: mão **esquerda** para efeito motor (corrente → força), mão
+**direita** para efeito gerador (movimento → corrente). Trocá-las inverte o sentido
+previsto — no papel é meio ponto, no painel é um motor girando ao contrário.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: p5.js (tabela Q4 — movimento): espira em campo uniforme com
+     vetores F em cada lado e curva τ(θ) = NBiA sinθ; botão "comutador" invertendo a
+     corrente a cada meia-volta mostrando o torque sempre a favor — o motor CC
+     nascendo. Paridade matplotlib no {python}: τ(θ) e diagrama da espira. -->
+
+::: {.sp}
+Uma barra coletora rígida de 0,80 m no quadro principal conduz 2 000 A durante uma
+falta, num ponto onde o campo da barra vizinha vale 0,025 T, perpendicular.
+
+**(a) Modelagem:** $F = BiL$ ($\theta = 90°$).
+
+**(b) Desenvolvimento:**
+$$F = 0{,}025 \times 2000 \times 0{,}80 = 40\,\text{N}$$
+
+Em regime (250 A), a mesma conta dá 5 N.
+
+**(c) Resultado:** a falta multiplica a força eletrodinâmica sobre a barra por 8 —
+e como o campo da vizinha também é proporcional à corrente dela, a força real entre
+barras cresce com $i^2$: ×64.
+
+**(d) Análise crítica:** é por isso que barramentos são **ancorados mecanicamente**
+para curto-circuito, não para o regime: as correntes de falta de dezenas de kA geram
+forças de milhares de newtons que já arrancaram barras mal fixadas. A equação do
+motor é também a equação do estrago — mesma física, sinal trocado no projeto.
+:::
