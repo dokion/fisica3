@@ -1,0 +1,104 @@
+---
+title: "2.5 — Análise de circuitos de corrente contínua"
+categories: [UE2, OE2.5-B4]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 2.5 [B4] Analisar circuitos de corrente contínua e elementos passivos e ativos
+            de circuitos
+            → naval: Leis de Kirchhoff na distribuição CC; ponte de Wheatstone em
+              instrumentação
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 23-24 >}}
+
+Um circuito real de bordo — banco de baterias, barramento, dezenas de consumidores —
+não se resolve com "V=Ri" uma vez: é uma rede. As duas leis de Kirchhoff são o método
+geral para qualquer rede, e valem tanto para o quadro de emergência quanto para a
+ponte de Wheatstone dentro de um sensor de temperatura.
+
+## Elementos ativos e passivos; convenção de sinais {{< ra OE2.5 B4 >}}
+
+- **Ativos**: fornecem energia — fontes de f.e.m. (baterias, geradores);
+- **Passivos**: absorvem ou armazenam — resistores (dissipam), capacitores e
+  indutores (armazenam; entram nos tópicos 2.6 e UE 3–4).
+
+**Convenção passiva de sinais:** num elemento passivo, a corrente entra pelo terminal
+de maior potencial ($P = Vi > 0$ absorvida); num ativo entregando energia, sai por
+ele. Fixar a convenção **antes** de equacionar é o que faz os sinais fecharem sozinhos
+no final.
+
+## As leis de Kirchhoff
+
+**Lei dos nós (correntes):** a soma das correntes que entram num nó é igual à soma
+das que saem —
+
+$$\sum i_{\text{entra}} = \sum i_{\text{sai}}$$
+
+É conservação de carga: nó não acumula elétron.
+
+**Lei das malhas (tensões):** ao percorrer qualquer malha fechada, a soma algébrica
+das variações de potencial é nula —
+
+$$\sum_{\text{malha}} \Delta V = 0$$
+
+É a força elétrica sendo conservativa (tópico 1.4): voltar ao mesmo ponto, voltar ao
+mesmo potencial. Regras de percurso: resistor a favor da corrente, $-Ri$; fonte do −
+para o +, $+\varepsilon$.
+
+**Associações** (casos particulares das leis):
+série $R_{\text{eq}} = R_1 + R_2 + \dots$; paralelo
+$1/R_{\text{eq}} = 1/R_1 + 1/R_2 + \dots$ — acrescentar carga em paralelo **derruba**
+a resistência total e **aumenta** a corrente da fonte (a comparação pedida
+literalmente no 7.04 §2.1.1.1 obj. 2.7–2.8).
+
+## Método das correntes de malha
+
+{{< aula 25-26 >}}
+
+Para redes com várias malhas: atribui-se uma corrente fictícia a cada malha, escreve-se
+a lei das tensões em cada uma e resolve-se o sistema linear.
+
+**Exemplo resolvido** — duas fontes em paralelo (gerador $\varepsilon_1 = 26$ V,
+$r_1 = 0{,}1\ \Omega$; banco de baterias $\varepsilon_2 = 24$ V, $r_2 = 0{,}05\ \Omega$)
+alimentando uma carga $R = 1{,}0\ \Omega$ — a topologia do quadro de emergência.
+Malhas 1 (gerador–carga) e 2 (bateria–carga), correntes $i_1, i_2$ pelas fontes e
+$i_1 + i_2$ pela carga:
+
+$$\begin{cases}
+26 = 0{,}1\,i_1 + 1{,}0\,(i_1 + i_2)\\[2pt]
+24 = 0{,}05\,i_2 + 1{,}0\,(i_1 + i_2)
+\end{cases}
+\;\Rightarrow\;
+i_1 = 15{,}0\,\text{A}, \quad i_2 = 8{,}6\,\text{A}$$
+
+Carga: $23{,}6$ A sob $V = 23{,}6$ V. O gerador (f.e.m. maior) assume a maior parte —
+e se $\varepsilon_1$ subir mais, $i_2$ **inverte**: o gerador passa a *carregar* a
+bateria. Uma conta de Kirchhoff explica o funcionamento do carregador flutuante.
+
+## Ponte de Wheatstone
+
+{{< aula 27-28 >}}
+
+Quatro resistores em losango, fonte numa diagonal, detector na outra. A ponte está
+**equilibrada** (detector lê zero) quando
+
+$$\frac{R_1}{R_2} = \frac{R_3}{R_4}$$
+
+Mede-se um $R$ desconhecido por comparação, sem depender da calibração do detector.
+Mais importante a bordo: com um braço sensível (Pt100 de temperatura, strain gauge de
+torque no eixo — o extrato do 7.04 cita ambos), o **desequilíbrio** da ponte vira o
+sinal de instrumentação. Kirchhoff é o idioma nativo dos sensores da praça de
+máquinas.
+
+::: {.callout-warning}
+**Erro clássico:** errar um sinal e "consertar" no final. O método é blindado se
+seguido: setas de corrente arbitrárias, convenção passiva, percorrer a malha num
+sentido fixo. Corrente negativa no resultado não é erro — é a seta que estava ao
+contrário, e o sinal conta isso.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Plotly (tabela Q4, SP11): circuito de duas fontes em
+     paralelo com sliders de ε1, ε2 e R — correntes de cada fonte recalculadas ao
+     vivo, com destaque do ponto em que i2 inverte (bateria passa a receber carga).
+     Paridade matplotlib no {python}: i1, i2 × ε1. -->

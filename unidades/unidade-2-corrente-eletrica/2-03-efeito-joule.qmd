@@ -1,0 +1,89 @@
+---
+title: "2.3 — O efeito Joule"
+categories: [UE2, OE2.3-B1]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 2.3 [B1] Conceituar o efeito Joule
+            → naval: P = I²R: aquecimento de cabos, fusíveis e sobrecarga de
+              circuitos
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 19-20 >}}
+
+Todo condutor percorrido por corrente esquenta. Às vezes é o objetivo (resistências de
+aquecimento, o ferro de soldar do paiol de eletricidade); quase sempre é perda — e,
+sem controle, é incêndio. O efeito Joule é a conta dessa conversão, e o fusível é a
+sua aplicação mais elegante: um pedaço de fio projetado para morrer primeiro.
+
+## A potência dissipada {{< ra OE2.3 B1 >}}
+
+Uma carga $dq$ que atravessa uma ddp $V$ entrega energia $dq \cdot V$ (definição de
+volt, tópico 1.4). A potência entregue a qualquer elemento de circuito é, portanto:
+
+$$P = V\,i$$
+
+Se o elemento é um **resistor** ($V = Ri$), toda essa energia vira calor — as colisões
+elétron–rede do modelo de Drude (2.2). Substituindo:
+
+$$\boxed{P = V i = R\,i^2 = \frac{V^2}{R}}$$
+
+As três formas são equivalentes, mas cada uma responde a uma pergunta diferente:
+
+- $P = Ri^2$: perdas em **cabos e enrolamentos** (a corrente é imposta pela carga) —
+  dobrar a corrente **quadruplica** o aquecimento; é a fórmula literal do extrato IMO;
+- $P = V^2/R$: consumo de um **aquecedor ligado à rede** (a tensão é imposta);
+- $P = Vi$: qualquer elemento, resistivo ou não.
+
+A energia dissipada em um intervalo é $E = P\,t$ (kWh na prática: 1 kWh = 3,6 MJ).
+
+## As consequências de bordo
+
+**Cabos:** a perda $Ri^2$ aquece o condutor; o isolamento tem temperatura máxima
+(tipicamente 90 °C). A ampacidade da tabela é o ponto em que geração e dissipação
+térmica se equilibram no limite do isolante — sobrecarga não "queima" na hora:
+**envelhece** o isolamento a cada hora quente (e o tópico 2.2 explicou por que
+isolamento envelhecido conduz).
+
+**Fusíveis e disjuntores térmicos:** exploram o $i^2$ — o elemento fusível é
+dimensionado para fundir com a corrente de falta antes que o cabo protegido chegue à
+temperatura de dano. A proteção elétrica é efeito Joule calibrado.
+
+**Por que transmitir em tensão alta:** para a mesma potência entregue ($P = Vi$),
+dobrar $V$ permite metade de $i$ — e as perdas $Ri^2$ nos cabos caem a **um quarto**.
+É a razão de existirem os 440 V (e, em navios maiores, 6,6 kV) em vez de tudo em
+115 V; a UE 4 fecha essa lógica com os transformadores.
+
+::: {.callout-warning}
+**Erro clássico:** usar $P = V^2/R$ com o $V$ da rede para calcular a perda **no
+cabo**. O $V$ de cada forma é a ddp **sobre aquele elemento** — sobre o cabo, a queda
+é só $iR_{\text{cabo}}$ (poucos volts), não os 440 V. Misturar os $V$s dá erros de
+ordens de grandeza.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Plotly (tabela Q4, SP11): perdas Ri² num alimentador em
+     função da corrente, com curva de temperatura estimada do cabo e a linha dos
+     90 °C do isolamento; segundo modo: mesma potência entregue em 115/440/6600 V
+     mostrando perdas ∝ 1/V². Parâmetros: cabo do tópico 2.1. Paridade matplotlib
+     no {python}. -->
+
+::: {.sp}
+O cabo do tópico 2.1 ($R = 0{,}0268\ \Omega$) alimenta o motor com 180 A em regime.
+Numa partida direta, a corrente sobe a 6× o valor nominal por alguns segundos.
+
+**(a) Modelagem:** efeito Joule no cabo: $P = R\,i^2$.
+
+**(b) Desenvolvimento:**
+$$P_{\text{regime}} = 0{,}0268 \times 180^2 = 868\,\text{W}
+\qquad
+P_{\text{partida}} = 0{,}0268 \times (6 \times 180)^2 = 31{,}3\,\text{kW}$$
+
+**(c) Resultado:** 0,87 kW contínuos dissolvidos ao longo do cabo em regime — e
+**36× isso** (31 kW) durante a partida.
+
+**(d) Análise crítica:** o fator 36 = 6² é o $i^2$ em ação. A partida é curta e o
+cabo tem inércia térmica — por isso sobrevive —, mas partidas repetidas em sequência
+somam calor mais rápido do que ele sai: a regra de praça de máquinas de "esperar
+entre tentativas de partida" é efeito Joule com contabilidade térmica. E a proteção
+precisa ser **temporizada** exatamente para tolerar esses segundos sem desarmar.
+:::

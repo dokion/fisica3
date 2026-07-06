@@ -1,0 +1,105 @@
+---
+title: "2.6 — Capacitores em circuitos: RC de resposta livre e forçada"
+categories: [UE2, OE2.6-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 2.6 [B3] Aplicar métodos de resolução de E.D.O's em circuitos RC livres e
+            forçados
+            → naval: Temporização e resposta de circuitos de controle eletrônico
+              de bordo
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 29-30 >}}
+
+Até aqui os circuitos eram instantâneos: ligou, a corrente é aquela. O capacitor
+introduz **memória e tempo** — carregar leva tempo, descarregar também, e desse tempo
+a eletrônica faz temporizadores, filtros e a razão de um banco de capacitores
+continuar perigoso depois do desligamento. Matematicamente, é a primeira EDO do curso
+— a mesma estrutura que reaparecerá em RL, LC e RLC na UE 4.
+
+## Resposta livre: a descarga {{< ra OE2.6 B3 >}}
+
+Capacitor carregado a $V_0$, chaveado sobre um resistor $R$. A lei das malhas
+(tópico 2.5), com $q = Cv$ e $i = -dq/dt$ (descarga):
+
+$$\frac{q}{C} - R\frac{dq}{dt}\cdot(-1) = 0
+\quad\Longrightarrow\quad
+\frac{dq}{dt} = -\frac{q}{RC}$$
+
+EDO linear de 1ª ordem, separável:
+
+$$\int \frac{dq}{q} = -\frac{1}{RC}\int dt
+\quad\Longrightarrow\quad
+\boxed{q(t) = q_0\,e^{-t/\tau}, \qquad \tau = RC}$$
+
+Tensão e corrente seguem a mesma exponencial. A **constante de tempo** $\tau = RC$
+(ohm × farad = segundo!) é o número operacional: em $t = \tau$ resta 37%; em
+$3\tau$, 5%; em $5\tau$, menos de 1% — a regra prática de "aguardar 5τ" antes de
+tocar num banco de capacitores de eletrônica de potência.
+
+## Resposta forçada: a carga
+
+Fonte $\varepsilon$ chaveada sobre $R$ e $C$ em série (capacitor descarregado). Malha:
+
+$$\varepsilon = R\frac{dq}{dt} + \frac{q}{C}$$
+
+Solução = particular (regime: $q_\infty = C\varepsilon$) + homogênea (a exponencial
+da resposta livre), com $q(0) = 0$:
+
+$$q(t) = C\varepsilon\left(1 - e^{-t/RC}\right)
+\qquad
+i(t) = \frac{\varepsilon}{R}\,e^{-t/RC}$$
+
+Leitura física dos extremos — que dispensa resolver a EDO e serve de verificação:
+
+- **$t = 0$:** capacitor descarregado se comporta como **fio** (curto): a corrente
+  salta a $\varepsilon/R$;
+- **$t \to \infty$:** capacitor cheio se comporta como **circuito aberto**: a
+  corrente morre, $v_C \to \varepsilon$.
+
+O balanço de energia da carga completa tem um resultado notável: a fonte entrega
+$q_\infty\varepsilon = C\varepsilon^2$; o capacitor guarda $\tfrac12 C\varepsilon^2$
+— **a outra metade vira calor no resistor, qualquer que seja $R$.** Carregar
+capacitor custa 50% de imposto Joule.
+
+## Onde isso mora a bordo
+
+O par $RC$ é o átomo da temporização analógica: retardos de relés e alarmes,
+*debounce* de contatos, partida suave de circuitos eletrônicos, filtros de fonte
+(o capacitor "segura" a tensão entre picos do retificador). Nos sistemas de controle
+do 7.04 (§2.1.3), toda resposta de sensor e atuador tem uma constante de tempo — e o
+modelo mental correto para "por que o indicador demora a responder" é exatamente esta
+exponencial.
+
+::: {.callout-warning}
+**Erro clássico:** tratar τ como "o tempo para carregar/descarregar". Em $\tau$ o
+processo está em 63% — a carga *completa* (praticamente) leva ~5τ. Em provas e na
+bancada, confundir os dois erra o projeto do temporizador por fator 5.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Plotly (tabela Q4): carga e descarga RC com sliders de R e
+     C — curvas q(t), v(t), i(t) e as marcas 1τ/3τ/5τ; painel de energia mostrando
+     a metade dissipada. Parâmetros: R 1–100 kΩ, C 10–1000 μF (τ de ms a min).
+     Paridade matplotlib no {python}. -->
+
+::: {.sp}
+Um banco de capacitores de um conversor de frequência tem $C = 4700\ \mu\text{F}$
+carregado a 620 V. Ao desligar, descarrega por um resistor de sangria de
+$R = 47\ \text{k}\Omega$. A norma interna manda aguardar tensão < 50 V antes da
+manutenção.
+
+**(a) Modelagem:** descarga livre: $v(t) = V_0 e^{-t/RC}$;
+$\tau = RC = 47{\times}10^3 \times 4700{\times}10^{-6} = 221\,\text{s}$.
+
+**(b) Desenvolvimento:** $v = 50$ V ⇒
+$$t = \tau\ln\frac{V_0}{v} = 221 \times \ln\frac{620}{50} = 221 \times 2{,}52 = 557\,\text{s}$$
+
+**(c) Resultado:** ≈ 9,3 minutos até o limiar seguro — não "alguns segundos".
+
+**(d) Análise crítica:** a energia inicial é $\tfrac12 CV^2 \approx 900$ J — um
+choque potencialmente fatal armazenado **sem nenhuma fonte ligada**. O resistor de
+sangria é dimensionado num compromisso: R menor descarrega mais rápido, mas dissipa
+mais em operação. A regra de ouro da bancada — medir antes de tocar — é a
+desconfiança correta de que alguma exponencial ainda não terminou.
+:::

@@ -1,0 +1,86 @@
+---
+title: "2.4 — Força eletromotriz"
+categories: [UE2, OE2.4-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 2.4 [B3] Resolver problemas envolvendo a força eletromotriz
+            → naval: Resistência interna: queda de tensão do gerador/bateria em
+              carga
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 21-22 >}}
+
+Resistores só gastam energia — alguém precisa fornecê-la. Esse alguém é a **fonte de
+f.e.m.**: bateria, gerador, célula solar. E toda fonte real tem um defeito de fábrica
+incontornável, a resistência interna, que explica um fenômeno que qualquer oficial já
+viu: a luz que "afunda" quando um grande consumidor parte.
+
+## F.e.m. e resistência interna {{< ra OE2.4 B3 >}}
+
+A **força eletromotriz** $\varepsilon$ (nome histórico — não é força, é energia por
+carga, em volts) é o trabalho por unidade de carga que a fonte realiza para bombear
+carga do terminal − para o terminal +, contra o campo:
+
+$$\varepsilon = \frac{dW}{dq}$$
+
+Numa bateria, a origem é química; num gerador, é a indução magnética (UE 3). A fonte
+**ideal** manteria $V = \varepsilon$ sempre. A real tem **resistência interna** $r$ —
+dos eletrodos, do eletrólito, dos enrolamentos — em série com a f.e.m. Com corrente
+$i$ circulando, a **tensão nos terminais** é o que sobra:
+
+$$\boxed{V_{\text{term}} = \varepsilon - r\,i}$$
+
+É a equação-âncora do 7.04 §2.1.1.1 (obj. 2.9–2.10: efeito da resistência interna
+sobre f.e.m. e ddp terminal, "demonstrando por cálculo e por experimento"). Três
+regimes de leitura:
+
+- **Circuito aberto** ($i = 0$): $V_{\text{term}} = \varepsilon$ — medir a bateria
+  "em vazio" lê a f.e.m., e por isso não diagnostica: uma bateria gasta pode mostrar
+  12,6 V sem carga e desabar sob demanda ($r$ cresceu);
+- **Em carga**: cada ampère custa $r$ volts. Num circuito fechado com carga $R$:
+  $$i = \frac{\varepsilon}{R + r}, \qquad V_{\text{term}} = \varepsilon\frac{R}{R+r}$$
+- **Curto-circuito** ($R \to 0$): $i_{\text{cc}} = \varepsilon/r$ — a corrente máxima
+  que a fonte consegue empurrar, limitada só pelo defeito interno.
+
+## Potência e o balanço da fonte
+
+Multiplicando a equação terminal por $i$:
+
+$$\underbrace{\varepsilon i}_{\text{gerada}} = \underbrace{V_{\text{term}}\,i}_{\text{entregue ao circuito}} + \underbrace{r\,i^2}_{\text{perdida dentro da fonte}}$$
+
+— conservação de energia (FIS-1, 3.5) em versão elétrica. A perda interna $ri^2$ é
+por que baterias esquentam em carga rápida e por que a sala de baterias é ventilada.
+
+**Associação de fontes:** em **série**, f.e.m.s e resistências internas somam (24 V
+de bordo = 2 × 12 V); em **paralelo** (fontes iguais), mesma f.e.m. e $r$ equivalente
+menor — mais capacidade de corrente, exatamente como o extrato descreve para bancos
+de baterias ("connected to increase their capacity", 7.04 §2.1.1.10).
+
+<!-- SIMULAÇÃO SUGERIDA: Plotly (tabela Q4, SP11): curva V_term × i de uma fonte
+     (reta de inclinação −r) com o ponto de operação móvel conforme R da carga;
+     comparar bateria nova (r pequeno) × gasta (r grande) e o afundamento ao ligar
+     um consumidor pesado. Paridade matplotlib no {python}. -->
+
+::: {.sp}
+O banco de baterias de emergência (24 V nominais, $\varepsilon = 25{,}2$ V,
+$r = 0{,}04\ \Omega$ total) alimenta o quadro de emergência. Liga-se um consumidor
+que drena 90 A.
+
+**(a) Modelagem:** fonte real: $V_{\text{term}} = \varepsilon - ri$.
+
+**(b) Desenvolvimento:**
+$$V_{\text{term}} = 25{,}2 - 0{,}04 \times 90 = 21{,}6\,\text{V}
+\qquad
+P_{\text{interna}} = r i^2 = 0{,}04 \times 90^2 = 324\,\text{W}$$
+
+**(c) Resultado:** os "24 V" viram 21,6 V nos terminais (queda de 14%), com 324 W
+aquecendo o próprio banco.
+
+**(d) Análise crítica:** equipamentos de emergência são especificados para operar
+com subtensão justamente por esta conta. E o diagnóstico de manutenção está na
+inclinação: medindo $V_{\text{term}}$ a duas correntes conhecidas, extrai-se $r$ —
+o envelhecimento da bateria é o crescimento de $r$, invisível em vazio, denunciado
+sob carga. Distrator clássico de prova: achar que a bateria "de 24 V" entrega 24 V
+sempre.
+:::

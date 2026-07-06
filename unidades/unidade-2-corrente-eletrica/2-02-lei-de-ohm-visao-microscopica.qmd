@@ -1,0 +1,82 @@
+---
+title: "2.2 — Lei de Ohm e condutividade: a visão microscópica (modelo de Drude)"
+categories: [UE2, OE2.2-B4]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 2.2 [B4] Analisar a resistência elétrica do ponto de vista microscópico
+            → naval: Por que condutores conduzem e isolantes isolam; degradação
+              de isolamento
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 17-18 >}}
+
+A Lei de Ohm ($V = Ri$) é um fato experimental — mas *por que* os metais obedecem a
+ela? E por que o cobre conduz e o PVC do isolamento não, se ambos estão cheios de
+elétrons? A resposta microscópica (o modelo de Drude) é simples o bastante para caber
+numa aula e rica o bastante para explicar o coeficiente de temperatura, o efeito
+Joule e a degradação de isolamento que o megger mede.
+
+## A Lei de Ohm macroscópica {{< ra OE2.2 B4 >}}
+
+Um material é **ôhmico** quando $R$ independe de $V$ — o gráfico $i \times V$ é uma
+reta. Em forma local (por ponto do material):
+
+$$\vec{J} = \sigma\,\vec{E}, \qquad \sigma = \frac{1}{\rho}\ \text{(condutividade)}$$
+
+Metais são ôhmicos em larga faixa; diodos, lâmpadas de filamento e o ar ionizado, não
+— para eles, "resistência" só faz sentido ponto a ponto da curva.
+
+## O modelo de Drude
+
+Num metal, os elétrons de valência formam um "gás" livre entre os íons da rede. Com
+campo aplicado, cada elétron acelera ($a = eE/m$) por um tempo médio $\tau$ entre
+colisões com a rede, e recomeça. O resultado líquido é uma **velocidade de deriva**
+média:
+
+$$v_d = \frac{eE\tau}{m}$$
+
+A densidade de corrente é a carga que deriva: com $n$ elétrons livres por volume,
+
+$$J = n\,e\,v_d = \left(\frac{n e^2 \tau}{m}\right) E
+\qquad\Longrightarrow\qquad
+\sigma = \frac{n e^2 \tau}{m}$$
+
+**A Lei de Ohm foi deduzida**: $J \propto E$ porque $v_d \propto E$. E cada fator
+conta uma história:
+
+- $n$ (portadores livres): **é o que separa condutor de isolante.** No cobre,
+  $n \sim 8{\times}10^{28}\,/\text{m}^3$; num bom isolante, praticamente zero — os
+  elétrons estão presos às ligações. É a resposta microscópica à âncora IMO
+  ("explains why some materials are conductors / insulators", 7.04 §2.1.1.1);
+- $\tau$ (tempo entre colisões): **cai com a temperatura** — rede mais agitada,
+  colisões mais frequentes, $\sigma$ menor. Daí o coeficiente de temperatura positivo
+  dos metais (tópico 2.1) e a corrida termorresistiva: cabo quente resiste mais,
+  dissipa mais, esquenta mais;
+- As colisões transferem a energia do campo para a rede — **o efeito Joule do
+  próximo tópico já está aqui**, como mecanismo.
+
+Um número que surpreende: com $J = 2\ \text{A/mm}^2$ no cobre,
+$v_d = J/ne \approx 0{,}15$ mm/s — os elétrons "andam" mais devagar que um ponteiro
+de relógio. O sinal elétrico viaja rápido (o campo se estabelece a fração da
+velocidade da luz); os portadores, não.
+
+## Isolantes reais: por que o megger existe
+
+O isolante ideal tem $n \approx 0$; o real tem impurezas, umidade absorvida,
+fissuras e envelhecimento térmico — cada um desses defeitos **cria portadores** e
+derruba a resistência de isolamento. Medi-la com tensão elevada (megger, 500 V) é
+sondar exatamente o $n$ do modelo de Drude: megaohms saudáveis significam pouquíssimos
+portadores; a queda ao longo dos meses é o isolamento envelhecendo — a física
+microscópica virando rotina de manutenção preditiva (7.04 §2.2.4).
+
+::: {.callout-warning}
+**Erro clássico:** "a corrente gasta elétrons" ou "os elétrons chegam rápido porque a
+luz acende rápido". Os portadores já estão no fio inteiro; o campo apenas os põe em
+deriva **simultaneamente**. Nada se gasta — o que se dissipa é energia, nas colisões.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: p5.js (tabela Q4 — movimento): "gás" de elétrons entre íons
+     da rede, com slider de E (deriva visível sobre o movimento térmico) e de
+     temperatura (agitação da rede ↑ → colisões ↑ → deriva ↓ para o mesmo E).
+     Paridade matplotlib no {python}: v_d × E para duas temperaturas. -->

@@ -1,0 +1,89 @@
+---
+title: "2.1 — Corrente, densidade de corrente, resistência e resistividade"
+categories: [UE2, OE2.1-B1]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 2.1 [B1] Definir densidade de corrente, resistência e resistividade
+            → naval: Dimensionamento e queda de tensão em cabos de bordo
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 15-16 >}}
+
+A eletrostática terminava sempre com $\vec E = 0$ dentro do condutor. Ligue uma fonte
+e esse equilíbrio nunca chega: o campo passa a **empurrar carga continuamente** — há
+corrente. Este tópico define as quatro grandezas com que se especifica qualquer cabo
+do navio: corrente, densidade de corrente, resistência e resistividade.
+
+## Corrente e densidade de corrente {{< ra OE2.1 B1 >}}
+
+A **corrente** é a taxa de passagem de carga por uma seção do condutor:
+
+$$i = \frac{dq}{dt} \qquad [\text{ampère: } 1\,\text{A} = 1\,\text{C/s}]$$
+
+Convenção: o sentido da corrente é o do movimento de cargas **positivas** (os
+elétrons, na prática, vão ao contrário — a convenção sobrevive por história e por
+funcionar).
+
+A **densidade de corrente** distribui essa taxa pela seção reta:
+
+$$J = \frac{i}{A} \qquad [\text{A/m}^2]$$
+
+É $J$, não $i$, que decide se um condutor sofre: 100 A são confortáveis num cabo de
+50 mm² ($J = 2$ A/mm²) e destrutivos num fio de 1,5 mm². As tabelas de ampacidade de
+bordo são, no fundo, tabelas de $J$ máximo admissível para cada isolamento e
+instalação.
+
+## Resistência e resistividade
+
+Aplicada uma ddp $V$ a um condutor, circula $i$. A razão define a **resistência**:
+
+$$R = \frac{V}{i} \qquad [\text{ohm: } 1\,\Omega = 1\,\text{V/A}]$$
+
+— a definição literal exigida pela âncora IMO (7.04 §2.1.1.1: "defines the unit of
+resistance", símbolo Ω). A resistência de um fio depende do material e da geometria:
+
+$$R = \rho\,\frac{L}{A}$$
+
+onde $\rho$ é a **resistividade** (Ω·m), propriedade **do material**: cobre
+$1{,}7{\times}10^{-8}$, alumínio $2{,}8{\times}10^{-8}$, aço ~$10^{-7}$, água do mar
+~$0{,}2$, isolantes $>10^{12}$. Dobrar o comprimento dobra $R$; dobrar a seção cai
+$R$ à metade — a razão física de cabos longos de bordo (praça de máquinas → passadiço)
+exigirem bitolas generosas.
+
+A resistividade **varia com a temperatura** ($\rho = \rho_0[1 + \alpha\,\Delta T]$,
+$\alpha_{\text{cobre}} \approx 0{,}004\,/°\text{C}$): enrolamentos quentes medem
+resistência maior — efeito que o tópico 2.2 explica pelo modelo microscópico e que a
+manutenção usa para *estimar temperatura interna de motores por medição de R*.
+
+::: {.callout-warning}
+**Erro clássico:** confundir resistência (do componente, em Ω) com resistividade (do
+material, em Ω·m). Um fio fino de cobre pode ter mais resistência que uma barra
+grossa de aço — o material dá o $\rho$, a geometria fecha o $R$.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Plotly (tabela Q4, SP11): R = ρL/A interativo — sliders de
+     L (10–200 m), seção (1,5–120 mm²) e material (cobre/alumínio), com a queda de
+     tensão ΔV = iR para corrente escolhida e o alerta de ΔV > 3% (critério usual
+     de instalação). Paridade matplotlib no {python}. -->
+
+::: {.sp}
+Um cabo de cobre de 95 mm² alimenta, a 75 m do quadro principal (ida + volta =
+150 m de condutor), um motor que drena 180 A em 440 V.
+
+**(a) Modelagem:** $R = \rho L/A$; queda de tensão $\Delta V = iR$.
+
+**(b) Desenvolvimento:**
+$$R = 1{,}7{\times}10^{-8} \times \frac{150}{95{\times}10^{-6}} = 0{,}0268\,\Omega
+\qquad
+\Delta V = 180 \times 0{,}0268 = 4{,}8\,\text{V}$$
+
+**(c) Resultado:** 4,8 V de queda (≈ 1,1% dos 440 V) — dentro do critério usual de
+projeto (≤ 3%).
+
+**(d) Análise crítica:** a queda parece pequena, mas escala com $L$ e com $i$: o
+mesmo cabo com o dobro do percurso e partindo o motor (corrente de partida ~6×) veria
+dezenas de volts faltando no terminal — e motor que parte com tensão baixa aquece.
+A densidade de corrente aqui é $J = 180/95 \approx 1{,}9$ A/mm², confortável; o
+dimensionamento real fecha os dois critérios ao mesmo tempo (ampacidade e ΔV).
+:::
