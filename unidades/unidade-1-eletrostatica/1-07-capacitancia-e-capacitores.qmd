@@ -1,0 +1,109 @@
+---
+title: "1.7 — Capacitância e capacitores: cálculo, associações, energia e dielétricos"
+categories: [UE1, OE1.7-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 1.7 [B3] Resolver problemas de capacitância para diferentes simetrias
+            → naval: Transdutor de capacitância variável (sensores de nível);
+              capacitores de partida
+(cobre os tópicos B 1.7 e 1.8 do sumário — ver nota de mapeamento no FIS_3_RA.md)
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 13-14 >}}
+
+O capacitor é a eletrostática embalada como componente: duas superfícies condutoras
+que armazenam carga e energia de campo elétrico. A bordo ele aparece como capacitor de
+partida de motores monofásicos, como filtro em fontes, e — disfarçado — como **sensor**:
+a sonda capacitiva de nível de tanque é um capacitor cuja "carga entre placas" é o
+próprio líquido medido.
+
+## Capacitância e as três simetrias {{< ra OE1.7 B3 >}}
+
+Para um par de condutores com cargas $\pm Q$ e ddp $V$ entre eles, a razão
+
+$$C = \frac{Q}{V} \qquad [\text{farad: } 1\,\text{F} = 1\,\text{C/V}]$$
+
+é a **capacitância** — depende só da **geometria** (e do meio), nunca de $Q$ ou $V$.
+A receita de cálculo é sempre a mesma: supor $\pm Q$, achar $E$ (Gauss, tópico 1.3),
+integrar para $V$, dividir. Nas três simetrias do curso:
+
+**Plano** (placas de área $A$, separação $d$): $E = \sigma/\varepsilon_0 = Q/\varepsilon_0 A$,
+$V = Ed$:
+
+$$C = \frac{\varepsilon_0 A}{d}$$
+
+**Cilíndrico** (raios $a < b$, comprimento $L$ — o modelo do cabo coaxial e da sonda
+de nível): $E = \lambda/2\pi\varepsilon_0 r$, $V = \int_a^b E\,dr$:
+
+$$C = \frac{2\pi\varepsilon_0 L}{\ln(b/a)}$$
+
+**Esférico** (cascas de raios $a < b$):
+
+$$C = 4\pi\varepsilon_0\,\frac{ab}{b-a}$$
+
+## Associações
+
+**Paralelo** (mesma ddp, cargas somam): $C_{\text{eq}} = C_1 + C_2 + \dots$
+**Série** (mesma carga, ddps somam): $\dfrac{1}{C_{\text{eq}}} = \dfrac{1}{C_1} + \dfrac{1}{C_2} + \dots$
+
+— note a regra **trocada** em relação a resistores (UE 2): capacitores em paralelo
+"crescem", em série "encolhem".
+
+## Energia armazenada
+
+Carregar um capacitor é transportar carga contra a ddp crescente:
+$dW = v\,dq = (q/C)\,dq$, integrando de 0 a $Q$:
+
+$$U = \frac{Q^2}{2C} = \tfrac{1}{2}CV^2$$
+
+A energia mora **no campo**: densidade $u = \tfrac12 \varepsilon_0 E^2$ (J/m³) —
+conceito que voltará idêntico na energia magnética (UE 3). Consequência prática: um
+capacitor **retém carga com o equipamento desligado**; bancos de capacitores de
+eletrônica de potência exigem descarga antes da manutenção.
+
+## Dielétricos
+
+Preencher o espaço entre placas com um isolante multiplica a capacitância pela
+**constante dielétrica** $\kappa$ do material:
+
+$$C = \kappa\,C_0 \qquad (\kappa_{\text{ar}} \approx 1;\; \kappa_{\text{óleo}} \approx 2{,}2;\; \kappa_{\text{água}} \approx 80)$$
+
+O campo polariza as moléculas do dielétrico, que criam campo oposto e reduzem $V$
+para a mesma carga. Além de $\kappa$, o dielétrico tem **rigidez** (campo máximo antes
+de romper) — o que limita a tensão de trabalho de cabos e capacitores reais.
+
+E aqui o sensor de nível se explica sozinho: na sonda coaxial vertical, o trecho
+imerso tem dielétrico líquido ($\kappa_{\text{liq}}$) e o restante, ar/vapor. A
+capacitância total cresce linearmente com o nível — medir $C$ **é** medir o nível.
+É o "variable-capacitance transducer" do 7.04 §2.1.2.2.
+
+<!-- SIMULAÇÃO SUGERIDA: Plotly (tabela Q4, SP9): sonda capacitiva coaxial — C(h)
+     linear com o nível do tanque, com κ selecionável (óleo/água) mostrando a
+     sensibilidade; segundo painel: energia ½CV² acumulada. Parâmetros: L = 4 m,
+     b/a = 1,5, κ = 2,2/80. Paridade matplotlib no {python}. -->
+
+::: {.sp}
+Uma sonda capacitiva coaxial de nível tem $L = 4{,}0$ m, razão de raios $b/a = 1{,}5$
+e mede um tanque de óleo ($\kappa = 2{,}2$). Calcule a capacitância com o tanque
+vazio e com 2,5 m de nível.
+
+**(a) Modelagem:** dois capacitores cilíndricos em **paralelo**: trecho imerso
+(altura $h$, com $\kappa$) + trecho seco ($L-h$, ar).
+
+**(b) Desenvolvimento:** por metro,
+$C' = \dfrac{2\pi\varepsilon_0}{\ln 1{,}5} = \dfrac{2\pi \times 8{,}85{\times}10^{-12}}{0{,}405}
+= 137\,\text{pF/m}$.
+
+$$C_{\text{vazio}} = 137 \times 4{,}0 = 549\,\text{pF}$$
+$$C_{(h=2{,}5)} = 137\times\big(2{,}2 \times 2{,}5 + 1{,}5\big) = 959\,\text{pF}$$
+
+**(c) Resultado:** de ~0,55 nF (vazio) a ~0,96 nF (2,5 m) — cerca de +164 pF por
+metro de óleo.
+
+**(d) Análise crítica:** a resposta é linear em $h$ — ideal para instrumentação — e a
+sensibilidade é proporcional a $(\kappa - 1)$: com água ($\kappa = 80$) o mesmo
+sensor "grita"; com GLP ($\kappa \approx 1{,}6$) sussurra, e a eletrônica precisa
+resolver picofarads. Por isso o mesmo princípio pede calibração por produto — física
+de Gauss decidindo especificação de instrumento.
+:::

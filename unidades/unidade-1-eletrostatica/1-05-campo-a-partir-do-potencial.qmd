@@ -1,0 +1,75 @@
+---
+title: "1.5 — Campo elétrico a partir do potencial"
+categories: [UE1, OE1.5-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 1.5 [B3] Calcular o campo elétrico a partir do potencial elétrico
+            → naval: —
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 9-10 >}}
+
+O tópico 1.4 calculou $V$ somando escalares — muito mais fácil que somar vetores de
+campo. Este tópico fecha o circuito: se o potencial já está calculado, o campo sai
+dele por **derivação**, sem nenhuma integral vetorial. É o mesmo par
+força–energia de FIS-1 ($F = -dU/dx$), agora por unidade de carga.
+
+## A relação inversa {{< ra OE1.5 B3 >}}
+
+Da definição $V_A - V_B = \int_A^B \vec E \cdot d\vec l$, invertendo:
+
+$$E_x = -\frac{\partial V}{\partial x}, \qquad
+E_y = -\frac{\partial V}{\partial y}, \qquad
+E_z = -\frac{\partial V}{\partial z}
+\qquad\text{ou}\qquad
+\vec{E} = -\nabla V$$
+
+Três leituras:
+
+- **O campo aponta "morro abaixo" do potencial** (o sinal negativo): das regiões de
+  $V$ alto para as de $V$ baixo — exatamente como o peso aponta para onde $U$
+  gravitacional diminui;
+- **O campo mede a inclinação:** onde $V$ varia rápido no espaço, $E$ é intenso.
+  Unidade coerente: $\text{V/m}$ (idêntica a N/C);
+- Ao longo de uma direção em que $V$ não muda, a componente de $E$ é **nula** — a
+  semente do tópico 1.6.
+
+## Exemplos resolvidos
+
+**1. Recuperando o campo da carga pontual.** De $V = kq/r$:
+
+$$E_r = -\frac{\partial V}{\partial r} = -kq\,\frac{\partial}{\partial r}\!\left(\frac{1}{r}\right)
+= \frac{kq}{r^2} \;\checkmark$$
+
+**2. Campo no eixo do anel** (do potencial, sem a integral vetorial do 1.2). O
+potencial do anel no eixo é imediato (todos os $dq$ à mesma distância):
+
+$$V(z) = \frac{1}{4\pi\varepsilon_0}\frac{Q}{\sqrt{z^2+R^2}}
+\qquad\Rightarrow\qquad
+E_z = -\frac{\partial V}{\partial z}
+= \frac{1}{4\pi\varepsilon_0}\,\frac{Q\,z}{(z^2+R^2)^{3/2}} \;\checkmark$$
+
+— o mesmo resultado do tópico 1.2, com metade do trabalho. Essa é a rotina
+profissional da eletrostática: **calcular $V$ (escalar), derivar para obter $\vec E$**.
+
+**3. Campo uniforme.** Entre dois planos com ddp $\Delta V$ separados por $d$
+(o capacitor do 1.7):
+
+$$E = \frac{\Delta V}{d}$$
+
+— a fórmula de bolso que converte "500 V do teste de isolamento através de 0,5 mm de
+isolante" em "1 MV/m dentro do material": é ela que dimensiona a rigidez dielétrica
+de cabos e o espaçamento de barramentos num quadro elétrico.
+
+::: {.callout-warning}
+**Erro clássico:** achar que $V = 0$ implica $E = 0$ (ou vice-versa). O campo é a
+**derivada**, não o valor: no ponto médio entre $+q$ e $-q$, $V = 0$ com $E$ máximo;
+dentro de um condutor, $E = 0$ com $V$ constante e geralmente ≠ 0. Zero de função e
+zero de inclinação são coisas diferentes.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Plotly (tabela Q4): V(z) do anel com a reta tangente móvel
+     e E_z = −dV/dz plotado embaixo, sincronizados (mesma abscissa) — "campo é a
+     inclinação do potencial". Parâmetros: Q = 2 μC, R = 0,5 m. Paridade matplotlib
+     no {python}. -->

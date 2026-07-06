@@ -1,0 +1,92 @@
+---
+title: "1.2 — Campo elétrico: carga pontual, dipolo e distribuições"
+categories: [UE1, OE1.2-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 1.2 [B3] Resolver problemas de campo e força elétrica em diversas distribuições
+            → naval: —
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 3-4 >}}
+
+Uma carga puntiforme é exceção; o mundo real tem cargas espalhadas — pela superfície de
+um cabo, pelo volume de uma nuvem de névoa num tanque, pelas placas de um capacitor. O
+programa deste tópico é único: dado **onde a carga está**, calcular $\vec E$ **em
+qualquer ponto** — primeiro para os casos-modelo, depois para distribuições contínuas
+por superposição.
+
+## Campo de uma carga pontual {{< ra OE1.2 B3 >}}
+
+Da Lei de Coulomb com $\vec F = q_0\vec E$ (carga de prova $q_0$):
+
+$$E = k\,\frac{|q|}{r^2}$$
+
+radial: para fora se $q > 0$, para dentro se $q < 0$. As **linhas de campo**
+visualizam: nascem nas cargas positivas, morrem nas negativas, nunca se cruzam, e a
+densidade de linhas mede a intensidade.
+
+## Campo do dipolo
+
+Um **dipolo** é o par $\pm q$ separado por $d$ — o modelo de moléculas polares e de
+antenas. Define-se o momento de dipolo $\vec p = q\vec d$ (de $-q$ para $+q$).
+No eixo do dipolo, a distâncias $z \gg d$, a superposição dos dois campos quase
+iguais e opostos deixa um resto que cai com o **cubo**:
+
+$$E = \frac{1}{4\pi\varepsilon_0}\frac{2p}{z^3}$$
+
+**Dipolo em campo externo uniforme:** a força resultante é nula, mas o binário não
+(FIS-1, tópico 1.2 — é o mesmo conjugado):
+
+$$\vec{\tau} = \vec{p} \times \vec{E}, \qquad U = -\vec{p}\cdot\vec{E}$$
+
+— o dipolo gira para se alinhar com o campo. Guarde a estrutura: é idêntica à da
+agulha do compasso magnético no campo da Terra (UE 3), com $\vec p \to \vec\mu$ e
+$\vec E \to \vec B$.
+
+## Distribuições contínuas: a receita
+
+Divide-se a distribuição em elementos $dq$ (com densidade linear $\lambda$,
+superficial $\sigma$ ou volumétrica $\rho$), soma-se o campo de cada elemento:
+
+$$\vec{E} = \frac{1}{4\pi\varepsilon_0}\int \frac{dq}{r^2}\,\hat{r}$$
+
+**Exemplo resolvido — anel carregado, no eixo** (o caso-mestre, e o embrião do disco
+e da placa): anel de raio $R$, carga $Q$, ponto a distância $z$ no eixo. Por simetria,
+as componentes transversais se cancelam; sobra o eixo:
+
+$$E_z = \frac{1}{4\pi\varepsilon_0}\int \frac{dq}{(z^2+R^2)}\cdot\underbrace{\frac{z}{\sqrt{z^2+R^2}}}_{\cos\theta}
+= \frac{1}{4\pi\varepsilon_0}\,\frac{Q\,z}{(z^2+R^2)^{3/2}}$$
+
+Verificações que valem para qualquer resultado: em $z \gg R$ recupera-se a carga
+pontual ($E \to kQ/z^2$); em $z = 0$, $E = 0$ (simetria). Integrando anéis, chega-se
+ao **disco** e, no limite do disco infinito, ao resultado mais usado do curso:
+
+$$E_{\text{placa infinita}} = \frac{\sigma}{2\varepsilon_0} \qquad \text{(uniforme, independente da distância)}$$
+
+— o campo entre as placas de um capacitor (tópico 1.7) já está pronto aqui.
+
+<!-- SIMULAÇÃO SUGERIDA: D3.js (tabela Q4 — campo/linhas com precisão): mapa de
+     linhas de campo para configurações selecionáveis (carga única, dipolo, par de
+     placas), com sonda móvel lendo E no ponto. Parâmetros: q ±1–5 μC, d 10–50 cm.
+     Paridade matplotlib no {python} (streamplot das mesmas configurações). -->
+
+::: {.sp}
+Numa inspeção, estima-se que a névoa de lavagem num tanque forma, próximo ao teto,
+uma camada aproximadamente plana com densidade superficial
+$\sigma = 8{,}0\times10^{-8}\ \text{C/m}^2$.
+
+**(a) Modelagem:** longe das bordas, a camada é uma "placa infinita":
+$E = \sigma/2\varepsilon_0$, com $\varepsilon_0 = 8{,}85{\times}10^{-12}$ F/m.
+
+**(b) Desenvolvimento:**
+$$E = \frac{8{,}0{\times}10^{-8}}{2 \times 8{,}85{\times}10^{-12}} = 4{,}5{\times}10^{3}\,\text{V/m}$$
+
+**(c) Resultado:** ≈ 4,5 kV/m no espaço de vapor do tanque.
+
+**(d) Análise crítica:** o ar rompe (faísca) em ~3 MV/m — este campo está três ordens
+abaixo, e ainda assim a operação é controlada: a densidade de carga **cresce com a
+vazão e o tempo** de lavagem, e pontas metálicas concentram o campo localmente
+(tópico 1.6) muito acima da média. O papel do cálculo de distribuição é dizer *quanto
+falta* para a margem sumir — não confirmar que "está seguro".
+:::

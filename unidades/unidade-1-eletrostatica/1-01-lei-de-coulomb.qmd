@@ -1,0 +1,101 @@
+---
+title: "1.1 — Lei de Coulomb: cargas, força elétrica e superposição"
+categories: [UE1, OE1.1-B1]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 1.1 [B1] Conceituar carga, campo elétrico e força elétrica
+            → naval: Eletricidade estática na faina de carga de petroleiros
+              (faísca/inertização)
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 1-2 >}}
+
+Por que um petroleiro lava tanques com equipamento aterrado, controla a vazão de carga
+e mantém a atmosfera inertizada? Porque óleo escoando por tubulação **separa cargas** —
+e carga separada acumula energia que, num ambiente com vapores de hidrocarboneto, volta
+como faísca. A eletrostática é a física desse risco, e começa com a grandeza que FIS-1
+não tinha: a carga elétrica.
+
+## Carga elétrica {{< ra OE1.1 B1 >}}
+
+A carga elétrica $q$ é a propriedade da matéria que produz e sente força elétrica.
+Fatos fundamentais:
+
+- Existe em **dois sinais** (positiva/negativa); iguais se repelem, opostos se atraem;
+- É **quantizada**: todo corpo carrega múltiplos da carga elementar
+  $e = 1{,}602{\times}10^{-19}\,\text{C}$ (elétron: $-e$; próton: $+e$);
+- É **conservada**: não se cria carga — separa-se. Atrito entre líquido e aço, ou
+  entre vapor e névoa d'água num jato de lavagem, deixa um lado positivo e o outro
+  negativo, em quantidades exatamente iguais;
+- Unidade SI: **coulomb (C)** — enorme na prática; cargas estáticas reais são de
+  nC a μC.
+
+Nos materiais, a mobilidade da carga distingue **condutores** (metais — elétrons
+livres; o casco e as tubulações) de **isolantes** (óleo, borracha, poliéster — carga
+fica onde foi depositada). É por isso que a estática "mora" nos líquidos isolantes:
+num condutor aterrado ela escoaria imediatamente.
+
+## Lei de Coulomb
+
+A força entre duas cargas puntiformes $q_1$ e $q_2$ separadas por $r$:
+
+$$F = k\,\frac{|q_1||q_2|}{r^2}, \qquad k = \frac{1}{4\pi\varepsilon_0} = 8{,}99{\times}10^9\ \text{N·m}^2/\text{C}^2$$
+
+na direção da reta que une as cargas — atrativa ou repulsiva conforme os sinais.
+A estrutura é a mesma da gravitação ($1/r^2$), mas com duas diferenças que mudam tudo:
+a força elétrica tem **dois sinais** e é **imensamente mais intensa** (entre dois
+prótons, a repulsão elétrica supera a atração gravitacional por um fator $\sim 10^{36}$).
+
+**Princípio da superposição:** com várias cargas, a força sobre uma delas é a **soma
+vetorial** das forças de cada uma das outras, calculadas duas a duas:
+
+$$\vec{F}_1 = \sum_{i \neq 1} \vec{F}_{i \to 1}$$
+
+— cada par interage como se os demais não existissem. Toda a eletrostática dos
+próximos tópicos é Coulomb + superposição, embalados em ferramentas cada vez mais
+eficientes.
+
+## Campo elétrico: a ideia em uma frase
+
+A força de Coulomb age a distância. O conceito que organiza isso — e que o tópico 1.2
+desenvolve — é o **campo elétrico** $\vec E$: cada carga modifica o espaço ao seu
+redor, e é esse campo (não a carga distante) que empurra a carga local:
+
+$$\vec{F} = q\,\vec{E}$$
+
+Unidade: N/C (= V/m, como o tópico 1.5 mostrará).
+
+::: {.callout-warning}
+**Erro clássico:** somar módulos de força sem olhar a geometria. A superposição é
+**vetorial** — duas forças de 5 N sobre a mesma carga podem somar 10 N, zero, ou
+qualquer valor entre, conforme as direções. Diagrama antes de conta, como nos
+diagramas de corpo livre de FIS-1.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: p5.js (tabela Q4 — interação visual): cargas arrastáveis no
+     plano com vetores de força de Coulomb desenhados em cada uma (módulo e direção
+     atualizando ao vivo); alternar sinal das cargas. Parâmetros: q de −5 a +5 μC,
+     distâncias 0,1–2 m. Paridade matplotlib no {python}: configuração de 3 cargas
+     com vetores de força. -->
+
+::: {.sp}
+Durante o carregamento de um tanque, uma gota de névoa carregada com
+$q_1 = +2{,}0$ nC passa a 5,0 cm de um ponto da superfície do óleo com carga local
+equivalente a $q_2 = +3{,}0$ nC.
+
+**(a) Modelagem:** cargas puntiformes; Lei de Coulomb.
+
+**(b) Desenvolvimento:**
+$$F = k\frac{|q_1||q_2|}{r^2}
+= 8{,}99{\times}10^9 \times \frac{2{,}0{\times}10^{-9} \times 3{,}0{\times}10^{-9}}{(0{,}050)^2}
+= 2{,}2{\times}10^{-5}\,\text{N}$$
+
+**(c) Resultado:** ~22 μN — força minúscula.
+
+**(d) Análise crítica:** o risco da estática não está na *força* entre cargas, e sim
+na **energia acumulada pela separação de bilhões delas**: potenciais de dezenas de kV
+surgem em tanques durante carga rápida (tópico 1.4 quantifica). Por isso as
+salvaguardas ISGOTT — limitar vazão inicial, aterrar tudo, inertizar a atmosfera —
+atacam a *separação* e a *faísca*, não a força de Coulomb em si.
+:::

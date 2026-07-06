@@ -1,0 +1,64 @@
+---
+title: "1.6 — Superfícies equipotenciais"
+categories: [UE1, OE1.6-B1]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 1.6 [B1] Conceituar superfícies equipotenciais
+            → naval: Casco e aterramento: a massa do navio como equipotencial de
+              referência
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 11-12 >}}
+
+Num mapa náutico, as isóbatas ligam pontos de mesma profundidade; no mapa elétrico, as
+equipotenciais ligam pontos de mesmo potencial. A analogia é exata — inclusive na
+regra de leitura: onde as linhas se apertam, o "declive" (o campo) é forte. E a
+equipotencial mais importante do navio é o próprio navio.
+
+## Definição e propriedades {{< ra OE1.6 B1 >}}
+
+Uma **superfície equipotencial** é o lugar geométrico dos pontos com o mesmo $V$.
+Das relações do tópico 1.5 seguem as propriedades, todas dedutíveis em uma linha:
+
+1. **Mover carga sobre a equipotencial não custa trabalho**
+   ($W = q\,\Delta V = 0$);
+2. **O campo é perpendicular à equipotencial em cada ponto** — se tivesse componente
+   tangencial, haveria variação de $V$ ao longo dela, contradição;
+3. **Equipotenciais não se cruzam** (um ponto não tem dois potenciais);
+4. **Onde elas se adensam, $E$ é intenso** ($E = -dV/dn$: mesmo $\Delta V$ em menos
+   distância).
+
+Galeria mínima: carga pontual → esferas concêntricas; campo uniforme → planos
+paralelos; dipolo → a família de superfícies fechando em torno de cada polo, com o
+plano mediano em $V = 0$.
+
+## Condutores: equipotenciais por natureza
+
+Em equilíbrio eletrostático, $\vec E = 0$ dentro do condutor (tópico 1.3) — logo **o
+condutor inteiro, volume e superfície, está a um único potencial**. E o campo externo
+sai perpendicular à sua superfície (propriedade 2 vestida de metal).
+
+É essa física que faz do **casco a referência de potencial de bordo** ("massa",
+"terra"): milhares de toneladas de aço, tudo ao mesmo $V$, em contato com um oceano
+condutor. Aterrar um equipamento é **colocá-lo na mesma equipotencial do casco** —
+sem ddp, sem corrente por quem tocar em ambos, sem faísca entre eles. A ligação de
+aterramento entre navio e terminal antes de conectar mangotes de carga é literalmente
+uma operação de "fundir duas equipotenciais em uma".
+
+O adensamento de equipotenciais (propriedade 4) explica também o **poder das pontas**:
+numa protuberância aguda de um condutor, as equipotenciais se comprimem e o campo
+local dispara — por isso corona e faíscas nascem em pontas, e por isso o para-raios
+do mastro *é* uma ponta: ele quer romper o ar ali, no caminho controlado para o mar.
+
+::: {.callout-warning}
+**Erro clássico:** "está aterrado, então o potencial é zero e não há perigo". Aterrar
+zera a **ddp com o casco** — não protege contra tocar simultaneamente dois pontos com
+ddp entre si (fase e massa, por exemplo), nem contra a corrente do próprio circuito.
+A equipotencial protege quem está *inteiro dentro dela*.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: D3.js (tabela Q4 — isolinhas com precisão): equipotenciais +
+     linhas de campo (ortogonais) para carga, dipolo e condutor com ponta —
+     alternável; destaque do adensamento na ponta. Paridade matplotlib no {python}:
+     contour de V com streamplot de E sobreposto. -->

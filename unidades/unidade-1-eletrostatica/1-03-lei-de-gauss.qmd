@@ -1,0 +1,109 @@
+---
+title: "1.3 — Lei de Gauss: fluxo, condutores e aplicações"
+categories: [UE1, OE1.3-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 1.3 [B3] Apresentar, interpretar e aplicar a lei de Gauss em casos de simetria
+            (esférica, cilíndrica e plana)
+            → naval: Blindagem eletrostática (gaiola de Faraday) de equipamentos
+              do passadiço
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 5-6 >}}
+
+O tópico anterior calculava campos integrando $dq$ por força bruta. A Lei de Gauss é o
+atalho dos casos com simetria — e, mais importante, é a razão física de o interior de
+uma estrutura metálica ser eletricamente "morto": o princípio da blindagem que protege
+a eletrônica do passadiço e faz do navio um bom lugar para estar durante uma
+trovoada.
+
+## Fluxo elétrico {{< ra OE1.3 B3 >}}
+
+O **fluxo** de $\vec E$ através de uma superfície mede quantas linhas de campo a
+atravessam:
+
+$$\Phi_E = \oint \vec{E}\cdot d\vec{A}$$
+
+($d\vec A$ normal à superfície; conta positivo saindo, negativo entrando). A **Lei de
+Gauss** afirma que, para qualquer superfície **fechada**, o fluxo total só depende da
+carga interna:
+
+$$\boxed{\oint \vec{E}\cdot d\vec{A} = \frac{q_{\text{int}}}{\varepsilon_0}}$$
+
+Linhas que nascem dentro têm que sair; cargas de fora entram e saem, contribuindo zero.
+É Coulomb reescrito em forma global — e vira ferramenta de cálculo quando a simetria
+permite tirar $E$ de dentro da integral.
+
+## As três simetrias canônicas
+
+**Esférica** (casca ou esfera de carga $Q$): gaussiana = esfera de raio $r$;
+$E \cdot 4\pi r^2 = q_{\text{int}}/\varepsilon_0$:
+
+$$E_{\text{fora}} = \frac{Q}{4\pi\varepsilon_0 r^2} \quad (\text{como carga pontual}); \qquad
+E_{\text{dentro da casca}} = 0$$
+
+**Cilíndrica** (linha/cabo com densidade $\lambda$): gaussiana = cilindro coaxial;
+$E \cdot 2\pi r L = \lambda L/\varepsilon_0$:
+
+$$E = \frac{\lambda}{2\pi\varepsilon_0 r}$$
+
+**Plana** (placa com densidade $\sigma$): gaussiana = "caixinha" atravessando a placa:
+
+$$E = \frac{\sigma}{2\varepsilon_0}$$
+
+— confirmando, em três linhas, a integral trabalhosa do tópico 1.2.
+
+## Condutores e a gaiola de Faraday
+
+Num condutor em equilíbrio eletrostático, os elétrons livres se movem até zerarem o
+campo interno. Consequências, todas via Gauss:
+
+1. $\vec E = 0$ **em todo o interior** do condutor;
+2. O excesso de carga mora **na superfície**;
+3. Na superfície, o campo é perpendicular e vale $E = \sigma/\varepsilon_0$;
+4. Numa **cavidade** sem carga dentro do condutor, $\vec E = 0$ — **blindagem**:
+   o mundo exterior não entra.
+
+A consequência 4 é a **gaiola de Faraday**: gabinetes metálicos de equipamentos de
+navegação, cabos blindados de instrumentação, e a própria superestrutura de aço
+protegem o que está dentro contra campos externos — inclusive os transientes brutais
+de uma descarga atmosférica no mastro: a corrente escoa pela superfície do aço para o
+mar, e o interior permanece calmo. (O inverso não vale: carga *dentro* da cavidade
+induz campo fora — blindagem eletrostática funciona de fora para dentro.)
+
+::: {.callout-warning}
+**Erro clássico:** usar Gauss "para calcular $E$" sem simetria. A lei vale **sempre**,
+mas só *resolve* o campo quando a simetria garante $E$ constante na gaussiana
+(esférica, cilíndrica, plana). Para um dipolo, Gauss é verdadeira e inútil como
+ferramenta de cálculo — use superposição (1.2).
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: D3.js (tabela Q4 — campo com precisão): condutores com
+     cavidade em corte 2D — carga externa aproximando e o campo interno permanecendo
+     nulo (blindagem); modo 2: casca esférica com E(r) plotado dentro/fora.
+     Paridade matplotlib no {python}: E(r) da casca esférica. -->
+
+::: {.sp}
+Um cabo isolado de antena atravessa o convés carregado com densidade linear
+$\lambda = 40\ \text{nC/m}$ após horas de vento seco. Estime o campo elétrico a
+10 cm e a 1,0 m do cabo.
+
+**(a) Modelagem:** simetria cilíndrica, cabo longo:
+$E = \lambda/(2\pi\varepsilon_0 r)$.
+
+**(b) Desenvolvimento:**
+$$E(0{,}10) = \frac{40{\times}10^{-9}}{2\pi \times 8{,}85{\times}10^{-12} \times 0{,}10}
+= 7{,}2{\times}10^{3}\,\text{V/m}
+\qquad
+E(1{,}0) = 7{,}2{\times}10^{2}\,\text{V/m}$$
+
+**(c) Resultado:** ~7,2 kV/m perto do cabo, caindo com $1/r$ (não $1/r^2$ — a
+geometria manda).
+
+**(d) Análise crítica:** a queda lenta $1/r$ é típica de cabos: o campo "alcança
+longe" comparado à carga pontual. Perto da superfície do condutor o valor é ainda
+maior — e é ali que o ar ioniza primeiro (efeito corona, visível como chiado em
+antenas em tempo seco). O remédio é o de sempre: caminho condutor para a terra — a
+consequência 2 de Gauss trabalhando a favor.
+:::

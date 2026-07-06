@@ -1,0 +1,90 @@
+---
+title: "1.4 — Potencial elétrico"
+categories: [UE1, OE1.4-B1]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 1.4 [B1] Definir potencial elétrico como taxa de energia por carga; definir
+            diferença de potencial (ddp) e a polarização de uma ddp
+            → naval: Ddp e f.e.m. na rede de bordo (440 V / 220 V); polaridade em CC
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 7-8 >}}
+
+O volt é a unidade mais falada de bordo — rede de 440 V, baterias de 24 V, megger de
+500 V — e este tópico define o que ela mede. A chave vem de FIS-1: a força elétrica de
+Coulomb é **conservativa** (mesma estrutura $1/r^2$), logo tem energia potencial; o
+potencial elétrico é essa energia **por unidade de carga**.
+
+## Energia potencial elétrica e potencial {{< ra OE1.4 B1 >}}
+
+Como em FIS-1 ($\Delta U = -W_{\text{cons}}$), o trabalho do campo elétrico sobre uma
+carga define uma energia potencial $U$. Dividindo pela carga, obtém-se uma propriedade
+**do ponto do espaço**, não da carga que o visita:
+
+$$V = \frac{U}{q} \qquad [\text{volt: } 1\,\text{V} = 1\,\text{J/C}]$$
+
+**Definição operacional** (a que se mede): a **diferença de potencial** (ddp) entre
+dois pontos é o trabalho por unidade de carga que o campo realiza de um ao outro —
+
+$$V_A - V_B = \frac{W_{A \to B}}{q} = \int_A^B \vec{E}\cdot d\vec{l}$$
+
+Como toda energia potencial, só **diferenças** importam: o zero é convenção
+(o infinito, nos problemas teóricos; **a massa/o casco**, na prática de bordo — o
+mesmo papel da quilha para o KG).
+
+**Polarização da ddp:** dizer "440 V" não basta — é preciso dizer **qual ponto está
+mais alto**. O terminal positivo é o de maior potencial; a carga positiva "desce" do
++ para o −, ganhando energia cinética ou entregando-a ao circuito. Em CC a polaridade
+é fixa e marcada (baterias, retificadores); ligá-la invertida é o erro que queima
+eletrônica — e é por isso que a âncora IMO (7.04 §2.1.1.1 obj.3.5) exige do oficial
+exatamente isto: explicar ddp e f.e.m. com suas unidades e símbolos.
+
+## Potencial de cargas: pontual, dipolo, distribuições
+
+Do campo da carga pontual, integrando de $r$ ao infinito (zero no infinito):
+
+$$V = \frac{1}{4\pi\varepsilon_0}\,\frac{q}{r}$$
+
+— **escalar** (com sinal), caindo com $1/r$. Para várias cargas, o potencial soma
+**algebricamente** (sem vetores! — a grande vantagem prática sobre o campo):
+
+$$V = \frac{1}{4\pi\varepsilon_0}\sum_i \frac{q_i}{r_i}
+\qquad\text{e, no contínuo,}\qquad
+V = \frac{1}{4\pi\varepsilon_0}\int \frac{dq}{r}$$
+
+**Dipolo** ($z \gg d$, no eixo): os potenciais $\pm q$ quase se cancelam, sobrando
+
+$$V = \frac{1}{4\pi\varepsilon_0}\,\frac{p\cos\theta}{r^2}$$
+
+($\theta$ medido do eixo do dipolo) — cai com $1/r^2$, mais rápido que a carga
+isolada, porque de longe o dipolo "parece neutro".
+
+A energia de montagem de um sistema de cargas segue de graça:
+$U = qV$ para trazer carga $q$ a um ponto de potencial $V$ criado pelas demais.
+
+<!-- SIMULAÇÃO SUGERIDA: Plotly (tabela Q4): mapa de calor/contorno de V(x,y) para
+     configurações selecionáveis (carga, dipolo, duas cargas iguais), com perfil
+     V(r) em corte; conecta com 1.6 (as curvas de nível são as equipotenciais).
+     Paridade matplotlib no {python} (contourf). -->
+
+::: {.sp}
+Durante carga rápida sem os cuidados de vazão, a superfície do óleo num tanque atinge
+potencial de $V = 25\ \text{kV}$ em relação ao casco (aterrado). Uma gota de névoa com
+carga $q = +5{,}0$ nC se desprende da superfície e é acelerada até uma estrutura
+aterrada.
+
+**(a) Modelagem:** energia por carga: $W = q\,\Delta V$ — a definição de ddp em ação.
+
+**(b) Desenvolvimento:**
+$$W = q\,\Delta V = 5{,}0{\times}10^{-9} \times 25{\times}10^{3} = 1{,}25{\times}10^{-4}\,\text{J}$$
+
+**(c) Resultado:** 0,125 mJ entregues por uma única gota ao chegar.
+
+**(d) Análise crítica:** a energia mínima de ignição de vapores de hidrocarboneto é
+da ordem de **0,2 mJ** — uma gota chega perto, e uma descarga real envolve o fluxo de
+muitas. É a razão de as regras de petroleiro serem escritas em termos de *potencial*:
+limitar vazão inicial limita a taxa de separação de carga, e portanto o V acumulado.
+Note o rendimento didático da definição: "volt = joule por coulomb" transformou um
+número de inspeção (25 kV) diretamente em energia de faísca.
+:::
