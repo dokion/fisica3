@@ -1,0 +1,72 @@
+---
+title: "4.8 — Materiais magnéticos: correntes de magnetização e razão giromagnética"
+categories: [UE4, OE4.8-B1]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 4.8 [B1] Definir corrente de magnetização
+            → naval: Intensidade de magnetização e permeabilidade (terminologia
+              literal do MC)
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 63-64 >}}
+
+Por que um núcleo de ferro multiplica o campo de um solenoide por milhares? Não há
+bateria dentro do ferro — mas há, em cada átomo, **correntes microscópicas** que o
+campo externo consegue alinhar. Este tópico define o vocabulário da matéria
+magnetizada: magnetização, correntes de magnetização, permeabilidade — os termos que
+o Model Course exige do oficial ao explicar o compasso (7.03 §1.1.5.1).
+
+## De onde vem o magnetismo da matéria {{< ra OE4.8 B1 >}}
+
+Cada elétron é um pequeno ímã por dois mecanismos: seu movimento **orbital** (uma
+espira de corrente atômica, 3.3) e seu **spin** (momento magnético intrínseco). A
+constante que converte momento angular em momento magnético é a **razão
+giromagnética**:
+
+$$\gamma = \frac{\mu}{L_{\text{ang}}}
+\qquad\text{(para o spin do elétron, } \gamma \approx \frac{e}{m_e}\text{)}$$
+
+— a assinatura quântica de que magnetismo e rotação são a mesma moeda (é ela que
+sustenta a ressonância magnética usada em análise de óleos e na medicina).
+
+Num material **não magnetizado**, esses ímãs atômicos apontam ao acaso e se cancelam.
+Campo externo aplicado, eles se alinham (mais ou menos, conforme o material — tópico
+4.9): o material ganha **magnetização** $\vec M$ — momento de dipolo magnético por
+unidade de volume (a "intensity of magnetization" literal do extrato 7.03).
+
+## Correntes de magnetização
+
+Visualize o material magnetizado como um mar de espirinhas atômicas alinhadas: no
+**interior**, as correntes de espiras vizinhas se cancelam; na **superfície**, sobra
+uma corrente líquida circulando — a **corrente de magnetização** $i_M$ (corrente
+*ligada*, por oposição à corrente *livre* dos fios):
+
+Um ímã permanente é, para todos os efeitos de campo, um **solenoide de correntes de
+magnetização** — sem fonte, sem fios, sem Joule (as correntes ligadas não dissipam:
+não há colisões de deriva, é estrutura atômica).
+
+O campo total num material dentro de um solenoide passa a ter duas fontes:
+
+$$B = \mu_0(n\,i_{\text{livre}} + M) = \mu_0\,n\,i\,(1 + \chi_m) = \boxed{\mu\,n\,i}$$
+
+onde $\chi_m$ é a **suscetibilidade magnética** e
+$\mu = \mu_0(1+\chi_m) = \mu_0\mu_r$ a **permeabilidade** do material — os outros
+dois termos do trio literal do 7.03 §1.1.5.1 ("intensity of magnetization;
+permeability; magnetic susceptibility"). Para o ferro doce, $\mu_r \sim 10^3$–$10^4$:
+eis o multiplicador do núcleo — o contactor do 3.4 e o transformador do 4.6 devem
+seu funcionamento às correntes de magnetização alinhadas do ferro.
+
+::: {.callout-warning}
+**Erro clássico:** tratar a corrente de magnetização como corrente "de verdade" que
+se pudesse medir com alicate amperímetro ou que aquecesse o material. Ela é o efeito
+líquido das correntes atômicas ligadas — produz campo real, mas não transporta carga
+de A a B nem paga efeito Joule. (Não confundir também com a "corrente de
+magnetização" do jargão de transformadores — a pequena corrente livre do primário em
+vazio que sustenta o fluxo do núcleo; o nome é o mesmo, o objeto não.)
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: p5.js (tabela Q4): grade de dipolos atômicos (setinhas)
+     alinhando sob campo externo crescente, com M e a corrente superficial líquida
+     desenhada na borda; mostrador de B = μ0(ni + M). Paridade matplotlib no
+     {python}: B × i com e sem núcleo (μr). -->

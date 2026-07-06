@@ -1,0 +1,70 @@
+---
+title: "4.2 — Transientes em circuitos R-C e R-L"
+categories: [UE4, OE4.2-B2]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 4.2 [B2] Apresentar soluções transientes em circuitos RC e RL
+            → naval: Transientes de energização/desenergização em circuitos de
+              controle
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 49-50 >}}
+
+Entre o "ligar" e o regime permanente existe um intervalo — o **transiente** — em que
+correntes e tensões podem passar longe dos valores de placa. Os tópicos 2.6 (RC) e
+3.8 (RL) resolveram cada caso; este os coloca lado a lado como **a mesma solução de
+primeira ordem**, e ensina a lê-los sem resolver EDO nenhuma.
+
+## A solução universal de 1ª ordem {{< ra OE4.2 B2 >}}
+
+Com um único armazenador (C **ou** L), a EDO do tópico 4.1 degenera para 1ª ordem, e
+**toda** grandeza $x(t)$ do circuito (qualquer tensão, qualquer corrente) evolui como:
+
+$$\boxed{x(t) = x_\infty + \big(x_0 - x_\infty\big)\,e^{-t/\tau}}
+\qquad
+\tau_{RC} = RC, \quad \tau_{RL} = L/R$$
+
+Receita de três números, sem integrar nada:
+
+1. **$x_0$** (valor inicial): use as continuidades — $v_C$ **não salta**, $i_L$
+   **não salta**; todo o resto se acomoda;
+2. **$x_\infty$** (regime): redesenhe o circuito com C = aberto e L = fio, e resolva
+   o circuito resistivo;
+3. **$\tau$**: com a resistência **vista pelos terminais do armazenador**.
+
+O par de comportamentos-limite em tabela:
+
+| | $t = 0^+$ | $t \to \infty$ | teima em |
+|---|---|---|---|
+| Capacitor | curto (se descarregado) | aberto | **tensão** |
+| Indutor | aberto | fio | **corrente** |
+
+## Dois transientes de bordo, lidos com a receita
+
+**Energização de bobina de contactor (RL):** $i_0 = 0$ (indutor não deixa saltar),
+$i_\infty = V/R$, $\tau = L/R$ — o contato fecha alguns ms depois do comando; um
+CLP que verifique a confirmação cedo demais "vê" falha onde há só transiente.
+
+**Fonte com capacitor de filtro (RC):** ao energizar, $v_C(0)=0$ → o capacitor é um
+curto momentâneo e a corrente inicial é limitada só pela resistência série: o **pico
+de inrush** que dimensiona fusíveis "lentos" em fontes eletrônicas. Ao desligar, o
+capacitor sustenta a tensão por $\tau$ generoso — o motivo dos avisos de espera do
+tópico 2.6.
+
+**Leitura de osciloscópio:** transiente de 1ª ordem é reconhecível de relance —
+exponencial pura, sem oscilação, 63% em $\tau$, morto em 5$\tau$. Se a forma de onda
+**ondula** antes de assentar, há dois armazenadores em conversa — e esse é
+exatamente o tópico 4.3.
+
+::: {.callout-warning}
+**Erro clássico:** aplicar a continuidade à grandeza errada — "a corrente do
+capacitor não salta" (salta, e como!) ou "a tensão do indutor não salta" (é o salto
+dela que gera o arco do 3.8). Grave o par correto: $v_C$ e $i_L$ são as duas únicas
+grandezas com memória.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Plotly (tabela Q4): painel RC × RL lado a lado com a mesma
+     receita x∞ + (x0 − x∞)e^(−t/τ) anotada sobre as curvas; sliders de R, L, C;
+     marcador de 1τ/3τ/5τ. Modo "osciloscópio": reconhecer 1ª ordem vs oscilatório.
+     Paridade matplotlib no {python}. -->

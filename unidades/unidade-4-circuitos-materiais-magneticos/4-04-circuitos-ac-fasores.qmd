@@ -1,0 +1,100 @@
+---
+title: "4.4 — Circuitos AC: valores eficazes, impedância e fasores"
+categories: [UE4, OE4.4-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 4.4 [B3] Definir tensão e corrente alternada; conceituar impedância, empregar o
+            modelo fasorial e aplicar na resolução de circuitos simples de CA
+            → naval: Rede 440 V/60 Hz; r.m.s. = 0,707 do pico; triângulo de
+              impedância
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 53-54 >}}
+
+A rede do navio é 440 V, 60 Hz — mas 440 V *do quê*, se a tensão cruza o zero 120
+vezes por segundo? Este tópico define as grandezas da corrente alternada (valor
+eficaz, fase), apresenta a ferramenta que torna CA tão simples quanto CC (o fasor) e
+generaliza a resistência para o mundo alternado: a impedância.
+
+## Tensão e corrente alternadas; valor eficaz {{< ra OE4.4 B3 >}}
+
+Do gerador (3.7): $v(t) = V_{\max}\sin(\omega t)$, com $\omega = 2\pi f$
+($f = 60$ Hz → $\omega = 377$ rad/s). A média de $v$ é zero — o número útil é a
+média do **aquecimento** ($P \propto v^2$). Define-se o valor **eficaz** (r.m.s.):
+a tensão CC que dissiparia a mesma potência. Para senoide:
+
+$$V_{\text{rms}} = \sqrt{\overline{v^2}} = \frac{V_{\max}}{\sqrt{2}} = 0{,}707\,V_{\max}$$
+
+— o 0,707 literal da âncora IMO (7.04 §2.1.1.2 obj.1.17). **Os 440 V da rede são
+r.m.s.**: o pico real é $440\sqrt2 = 622$ V — o número que o isolamento precisa
+suportar. Voltímetros de painel leem r.m.s. por construção.
+
+## Fasores: a senoide vista de cima
+
+Toda senoide é a projeção de um **vetor girante** (o fasor — nome literal do extrato:
+"the rotating vector is called a phasor") de comprimento igual à amplitude, girando a
+$\omega$. Congele o giro e reste a informação útil: **amplitude e fase**. Somar
+senoides de mesma frequência vira somar vetores — FIS-1 de novo.
+
+Cada elemento impõe sua defasagem entre $v$ e $i$:
+
+| Elemento | Reação a CA | Defasagem | "Resistência" CA |
+|---|---|---|---|
+| R | independe de $f$ | $v$ e $i$ em fase | $R$ |
+| L | freia variação de $i$ | $v$ **adianta** 90° | $X_L = \omega L$ |
+| C | freia variação de $v$ | $v$ **atrasa** 90° | $X_C = 1/\omega C$ |
+
+As **reatâncias** $X_L$ e $X_C$ (em ohms) limitam corrente **sem dissipar** — a
+energia entra e volta a cada quarto de ciclo (3.9/1.7). Mnemônico de eletricista:
+*ELI the ICE man* (no indutor, E antes de I; no capacitor, I antes de E).
+
+## Impedância e o triângulo
+
+Na malha série RLC com fonte senoidal, os fasores de tensão somam como vetores: o de
+$R$ no eixo real, os de $L$ e $C$ em quadratura (opostos entre si). O módulo da soma
+define a **impedância**:
+
+$$\boxed{Z = \sqrt{R^2 + (X_L - X_C)^2}}
+\qquad
+I_{\text{rms}} = \frac{V_{\text{rms}}}{Z}
+\qquad
+\tan\varphi = \frac{X_L - X_C}{R}$$
+
+— o **triângulo de impedância** (R na base, X na vertical, Z na hipotenusa, ângulo
+$\varphi$) que a âncora pede desenhado (7.04 §2.1.1.2 obj.4.8). $Z$ está para CA como
+$R$ para CC (obj.4.2, literal) — a Lei de Ohm sobrevive, de fasor em punho. O ângulo
+$\varphi$ é a defasagem total — e o famoso **fator de potência** $\cos\varphi$ das
+disciplinas profissionais: só $V I\cos\varphi$ vira trabalho; o resto oscila entre
+gerador e reatâncias, ocupando cabo sem produzir.
+
+<!-- SIMULAÇÃO SUGERIDA: p5.js (tabela Q4 — movimento): fasor girante com a senoide
+     sendo projetada em tempo real (a construção literal do extrato); modo 2:
+     triângulo de impedância interativo com sliders de R, L, C, f — Z, φ e i(t)
+     atualizando. Parâmetros: rede 440 V/60 Hz. Paridade matplotlib no {python}:
+     v(t), i(t) defasados + triângulo. -->
+
+::: {.sp}
+Um aquecedor com resistência $R = 12\ \Omega$ e indutância parasita
+$L = 15\ \text{mH}$ é ligado na rede 440 V/60 Hz.
+
+**(a) Modelagem:** série RL em CA: $X_L = \omega L$;
+$Z = \sqrt{R^2 + X_L^2}$; $\omega = 377$ rad/s.
+
+**(b) Desenvolvimento:**
+$$X_L = 377 \times 0{,}015 = 5{,}66\,\Omega
+\qquad
+Z = \sqrt{12^2 + 5{,}66^2} = 13{,}3\,\Omega$$
+$$I = \frac{440}{13{,}3} = 33{,}1\,\text{A}
+\qquad
+\varphi = \arctan\frac{5{,}66}{12} = 25{,}3° \;(\cos\varphi = 0{,}90)$$
+
+**(c) Resultado:** 33 A com fator de potência 0,90 — contra 36,7 A e fp = 1 se fosse
+resistência pura.
+
+**(d) Análise crítica:** a indutância "rouba" 10% do fator de potência: o gerador
+fornece 14,6 kVA para entregar 13,2 kW úteis. Multiplicado pela praça de máquinas
+inteira (motores são muito mais indutivos que isto), eis por que navios modernos têm
+correção de fator de potência — e por que o distrator clássico "440/12 = 36,7 A"
+erra: em CA, quem divide é Z, não R.
+:::

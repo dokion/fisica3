@@ -1,0 +1,79 @@
+---
+title: "4.3 — Oscilações livres (LC) e amortecidas (RLC)"
+categories: [UE4, OE4.3-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 4.3 [B3] Encontrar soluções para as oscilações livres e amortecidas de circuitos
+            LC e RLC
+            → naval: Circuitos de sintonia de receptores (VHF/MF-HF) de bordo
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 51-52 >}}
+
+Junte os dois armazenadores — capacitor e indutor — e o circuito ganha o que nenhum
+transiente de 1ª ordem tinha: **ritmo próprio**. A energia passa a balançar entre o
+campo elétrico e o magnético numa frequência natural que só depende de L e C — o
+coração de todo circuito de sintonia dos rádios do GMDSS.
+
+## O oscilador LC ideal {{< ra OE4.3 B3 >}}
+
+Capacitor carregado com $q_0$, chaveado sobre um indutor (sem resistência). A EDO do
+tópico 4.1 com $R = 0$ e $\varepsilon = 0$:
+
+$$L\frac{d^2q}{dt^2} + \frac{q}{C} = 0
+\qquad\Longrightarrow\qquad
+\frac{d^2q}{dt^2} = -\frac{1}{LC}\,q$$
+
+— a equação do MHS (dicionário do 4.1: $m\ddot x = -kx$). Solução:
+
+$$q(t) = q_0\cos(\omega_0 t), \qquad
+\boxed{\omega_0 = \frac{1}{\sqrt{LC}}}
+\qquad f_0 = \frac{1}{2\pi\sqrt{LC}}$$
+
+A energia confirma o balanço: $U_E = q^2/2C$ e $U_B = \tfrac12 Li^2$ somam constante,
+trocando de mãos duas vezes por ciclo — a versão elétrica exata do sistema
+massa–mola, com as densidades de campo do tópico 3.9 se revezando.
+
+## RLC: o amortecimento entra
+
+Com $R$ presente, cada ciclo paga pedágio Joule. A EDO completa
+($L\ddot q + R\dot q + q/C = 0$) tem solução subamortecida (para $R$ pequeno):
+
+$$q(t) = q_0\,e^{-Rt/2L}\cos(\omega' t), \qquad
+\omega' = \sqrt{\omega_0^2 - \left(\frac{R}{2L}\right)^2}$$
+
+— oscilação dentro de um envelope exponencial. Crescendo $R$, chega-se ao
+**amortecimento crítico** ($R = 2\sqrt{L/C}$) e ao **superamortecido**, sem oscilar:
+o mapa completo de FIS-2 (sub/crítico/super) falado em ohms. Leituras práticas:
+
+- O "ringing" que o osciloscópio mostra após um chaveamento — aquela ondulação
+  decaindo — é um RLC parasita (indutância de trilhas + capacitâncias) tocando sua
+  nota natural;
+- **Snubbers** RC em contactores são amortecimento **de projeto**: mata-se a
+  oscilação escolhendo o regime crítico.
+
+## A aplicação-mestra: sintonia
+
+Um LC ressoa **na sua** frequência: $f_0 = 1/2\pi\sqrt{LC}$. O circuito de sintonia
+de um receptor usa isso como filtro de estação — variar $C$ (ou $L$) percorre o dial:
+
+$$C = \frac{1}{(2\pi f_0)^2 L}$$
+
+Para o canal 16 VHF (156,8 MHz) com $L = 0{,}10\ \mu$H:
+$C = 1/[(2\pi \times 156{,}8{\times}10^6)^2 \times 10^{-7}] \approx 10{,}3$ pF —
+picofarads: nas frequências marítimas, os componentes de sintonia são minúsculos e
+qualquer capacitância parasita desafina. O tópico 4.5 completa: a **seletividade**
+(quão estreita é a "nota") é quem decide se o canal vizinho interfere.
+
+::: {.callout-warning}
+**Erro clássico:** esquecer que o amortecimento **desloca** a frequência
+($\omega' < \omega_0$) e, mais grave, usar as fórmulas de oscilação num circuito
+superamortecido ($R > 2\sqrt{L/C}$), onde nada oscila. Antes de escrever cossenos,
+confira o regime — exatamente como no oscilador mecânico.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Plotly (tabela Q4): q(t) e as energias U_E/U_B do LC ideal
+     trocando de mãos; slider de R levando o RLC de sub → crítico → super (os três
+     regimes de FIS-2 em ohms); painel de sintonia f0(C) com o canal 16 marcado.
+     Parâmetros: L = 0,1 μH–1 H, C = pF–mF. Paridade matplotlib no {python}. -->

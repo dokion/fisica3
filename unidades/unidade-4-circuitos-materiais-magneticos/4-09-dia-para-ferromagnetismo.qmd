@@ -1,0 +1,80 @@
+---
+title: "4.9 — Diamagnetismo, paramagnetismo e ferromagnetismo"
+categories: [UE4, OE4.9-B4]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 4.9 [B4] Analisar o magnetismo nos diferentes tipos de materiais; analisar as
+            leis de Curie e Curie-Weiss
+            → naval: Ferro duro × mole; magnetismo permanente e induzido do casco;
+              desvio do compasso
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 65-66 >}}
+
+Todo material responde a um campo magnético — mas de três maneiras radicalmente
+diferentes, e a diferença importa na bitácula: o aço do casco responde de um jeito
+(forte, e com memória), o latão e o alumínio de outro (quase nada). É por isso que a
+bitácula é de latão e o desvio do compasso tem duas componentes com nomes próprios.
+
+## As três famílias {{< ra OE4.9 B4 >}}
+
+**Diamagnetismo** ($\chi_m < 0$, minúscula: $\sim -10^{-5}$): presente em **todos** os
+materiais. O campo aplicado perturba as órbitas eletrônicas e — Lenz atômico (3.6) —
+induz momentos **opostos** ao campo: o material é fracamente **repelido**. Água,
+cobre, bismuto. Só aparece quando nada mais forte o mascara.
+
+**Paramagnetismo** ($\chi_m > 0$, pequena: $\sim 10^{-5}$–$10^{-3}$): átomos com
+momento magnético permanente (spins desemparelhados), mas **independentes**: o campo
+tenta alinhá-los, a agitação térmica desfaz. O equilíbrio dá a **Lei de Curie**:
+
+$$M = C\,\frac{B}{T}$$
+
+— magnetização proporcional ao campo e **inversamente à temperatura**: esfriar
+alinha, aquecer bagunça. Alumínio, oxigênio líquido, sais de terras raras.
+
+**Ferromagnetismo** ($\chi_m$ efetiva: $10^2$–$10^5$): em ferro, níquel, cobalto e
+seus aços, a interação quântica de troca alinha os spins vizinhos
+**espontaneamente**, em regiões já saturadas — os **domínios**. O campo externo não
+precisa alinhar átomo por átomo: apenas move fronteiras de domínio e gira domínios
+inteiros — resposta gigante, não linear e **com memória** (a histerese do 4.10).
+
+Acima da **temperatura de Curie** $T_C$ (770 °C para o ferro), a agitação vence a
+troca e o material vira paramagnético, seguindo a **Lei de Curie–Weiss**:
+
+$$\chi_m = \frac{C}{T - T_C} \qquad (T > T_C)$$
+
+— a suscetibilidade **diverge** ao se aproximar de $T_C$ por cima: o material
+"pressente" a transição. (Aplicação de estaleiro: aquecer uma peça acima de $T_C$
+apaga sua magnetização — o *flash* térmico de desmagnetização.)
+
+## A análise que interessa à navegação: duro × mole
+
+Dentro dos ferromagnéticos, a distinção operacional do 7.03 §1.1.5.1:
+
+- **Ferro mole** (magneticamente): magnetiza-se forte **enquanto** o campo externo
+  existe e esquece depois. No navio: o magnetismo **induzido** pelo campo da Terra,
+  que **muda com o rumo e a latitude** — a componente "camaleoa" do desvio, compensada
+  com massas de ferro doce (as **esferas** de Flinders na bitácula);
+- **Ferro duro**: difícil de magnetizar, difícil de desmagnetizar — guarda. No navio:
+  o magnetismo **permanente** adquirido na construção (martelamento e solda com o
+  casco parado no mesmo rumo por meses: a Terra "grava" no aço) — a componente fixa
+  do desvio, compensada com **ímãs** permanentes na bitácula.
+
+A curva de desvios do compasso é, portanto, um relatório de física de materiais: a
+parte que varia com o rumo denuncia o ferro mole; a constante, o ferro duro. E o
+compasso sobrevive porque cada componente tem seu antídoto de mesmo material.
+
+::: {.callout-warning}
+**Erro clássico:** "material magnético" como sinônimo de ferromagnético forte.
+Alumínio *é* magnético (para-), latão e cobre *são* (dia-) — apenas mil a cem mil
+vezes mais fracos que o aço. É exatamente essa fraqueza que os coloca na bitácula e
+nas ferramentas "antimagnéticas": não é ausência de magnetismo, é magnetismo
+irrelevante para a agulha.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: p5.js (tabela Q4): grade de spins com controles de campo e
+     temperatura — modo paramagnético (alinhamento × agitação, M ∝ B/T visível) e
+     modo ferromagnético (domínios crescendo/girando, transição em T_C);
+     curvas M(T) de Curie e χ(T) de Curie–Weiss ao lado. Paridade matplotlib no
+     {python}: as duas leis plotadas. -->

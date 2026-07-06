@@ -1,0 +1,78 @@
+---
+title: "4.7 — Filtros: passa-baixa, passa-alta e passa-banda"
+categories: [UE4, OE4.7-B4]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 4.7 [B4] Analisar filtros de frequência em diferentes regimes de funcionamento
+            → naval: Filtros passa-baixa/alta/banda em eletrônica de navegação e
+              comunicações
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 61-62 >}}
+
+Reatâncias dependem da frequência — $X_L = \omega L$ sobe, $X_C = 1/\omega C$ desce.
+Um divisor de tensão montado com elas trata cada frequência de um jeito: nasce o
+**filtro**, o componente que separa o sinal do ruído em toda a eletrônica de
+navegação e comunicações do passadiço.
+
+## O princípio: divisor dependente de frequência {{< ra OE4.7 B4 >}}
+
+No divisor resistivo, $V_{\text{out}}/V_{\text{in}} = R_2/(R_1+R_2)$ — igual para
+qualquer frequência. Troque um braço por C ou L e a razão vira **função de**
+$\omega$: define-se o **ganho** $|H(\omega)| = V_{\text{out}}/V_{\text{in}}$.
+
+**Passa-baixa RC** (R em série, saída sobre C): em baixa frequência, $X_C$ enorme —
+o capacitor "abre" e a saída copia a entrada ($|H| \to 1$); em alta, $X_C \to 0$ —
+o capacitor curto-circuita a saída ($|H| \to 0$). Quantitativamente:
+
+$$|H(\omega)| = \frac{X_C}{\sqrt{R^2 + X_C^2}} = \frac{1}{\sqrt{1 + (\omega RC)^2}}$$
+
+A fronteira é a **frequência de corte**, onde $|H| = 1/\sqrt2$ (meia potência):
+
+$$\boxed{f_c = \frac{1}{2\pi RC}}$$
+
+**Passa-alta RC**: os mesmos componentes com a saída sobre o R — o espelho:
+$|H| = \omega RC/\sqrt{1+(\omega RC)^2}$, bloqueia baixas (e CC!), passa altas.
+
+**Passa-banda**: um RLC sintonizado (4.5) como braço do divisor — passa a vizinhança
+de $f_0 = 1/2\pi\sqrt{LC}$ e rejeita o resto, com largura ditada pelo $Q$. (O
+complementar, **rejeita-banda**, elimina uma frequência específica.)
+
+## A análise por regimes (o método rápido)
+
+Antes de qualquer álgebra, o filtro se lê pelos **limites** — os mesmos reflexos dos
+transientes (4.2), agora em frequência:
+
+| | $\omega \to 0$ (CC) | $\omega \to \infty$ |
+|---|---|---|
+| C | aberto | fio |
+| L | fio | aberto |
+
+Substitua mentalmente e pergunte "a saída enxerga a entrada?": a topologia responde
+passa-o-quê em dez segundos; a álgebra só põe número no $f_c$.
+
+## Onde eles moram no passadiço
+
+- **Passa-baixa**: alisar a saída de retificadores (o capacitor de filtro da fonte);
+  tirar chiado de instrumentação lenta (um Pt100 não tem conteúdo em kHz — tudo
+  acima é ruído);
+- **Passa-alta**: bloquear o nível CC entre estágios de amplificadores; separar o
+  sinal de áudio da polarização;
+- **Passa-banda**: **todo receptor** — o estágio de sintonia do 4.5 é um passa-banda
+  centrado no canal; o duplexer que deixa o VHF transmitir e receber pela mesma
+  antena é um par de filtros afiados;
+- **Rejeita-banda**: suprimir um interferente conhecido (harmônico da rede de 60 Hz
+  contaminando instrumentação de baixa frequência).
+
+::: {.callout-warning}
+**Erro clássico:** tratar $f_c$ como um muro — "abaixo passa tudo, acima nada". O
+corte RC de 1ª ordem é uma **rampa suave** (−20 dB/década): em $f_c$ ainda passa 70,7%;
+uma década acima, ~10%. Filtros "de muro" exigem ordens altas (vários estágios) — e
+é por isso que rejeitar um canal vizinho pede o $Q$ do 4.5, não um RC solitário.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Plotly (tabela Q4): curvas |H(f)| das quatro topologias
+     (log-log), com sliders de R, C, L e o ponto de −3 dB marcado; entrada de teste
+     = duas senoides somadas (sinal + ruído) mostrando a saída no tempo antes/depois
+     do filtro. Paridade matplotlib no {python}. -->

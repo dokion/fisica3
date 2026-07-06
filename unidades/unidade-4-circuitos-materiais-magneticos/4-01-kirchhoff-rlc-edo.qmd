@@ -1,0 +1,86 @@
+---
+title: "4.1 — Kirchhoff revisitada: a EDO dos circuitos R, L e C"
+categories: [UE4, OE4.1-B3]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 4.1 [B3] Relacionar a Lei de tensões de Kirchhoff com forças conservativas,
+            modelar a E.D.O para circuitos com resistores, capacitores e indutores,
+            forçados e livres
+            → naval: A malha fechada da lei de Kirchhoff como circulação
+              conservativa
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 47-48 >}}
+
+A última unidade do curso monta o quebra-cabeça inteiro: R (UE 2), C (UE 1–2) e L
+(UE 3) no mesmo circuito, alimentados pela corrente alternada que o gerador (3.7)
+produz por natureza. A porta de entrada é reconhecer que a lei das malhas — usada
+mecanicamente até aqui — é um princípio de conservação, e que ela gera **uma EDO por
+circuito**.
+
+## Kirchhoff como conservação {{< ra OE4.1 B3 >}}
+
+A lei das malhas ($\sum \Delta V = 0$) vale porque o campo eletrostático é
+**conservativo** (tópico 1.4): a circulação de $\vec E$ num caminho fechado é nula —
+voltar ao mesmo ponto é voltar ao mesmo potencial, exatamente como o trabalho do peso
+num circuito fechado é zero (FIS-1, 3.4). Percorrer a malha somando quedas e ganhos é
+fazer um balanço de energia por unidade de carga.
+
+(Nota fina, que a UE 3 já plantou: onde há fluxo magnético variável, o campo induzido
+**não** é conservativo — a "violação" da malha é justamente a f.e.m. de Faraday. A
+contabilidade se conserta tratando $-L\,di/dt$ como elemento de circuito, e é o que
+faremos.)
+
+## O dicionário dos três elementos
+
+Cada elemento traduz corrente em tensão à sua maneira:
+
+$$v_R = R\,i \qquad
+v_L = L\frac{di}{dt} \qquad
+v_C = \frac{q}{C}, \quad i = \frac{dq}{dt}$$
+
+— o resistor olha o **presente** da corrente, o indutor olha sua **tendência**
+(derivada), o capacitor olha seu **passado** (integral). Kirchhoff numa malha série
+com fonte $\varepsilon(t)$:
+
+$$\boxed{L\frac{d^2q}{dt^2} + R\frac{dq}{dt} + \frac{q}{C} = \varepsilon(t)}$$
+
+Esta é **a** equação da unidade — e o aluno de FIS-1/FIS-2 já a conhece de outro
+uniforme: é idêntica à do oscilador mecânico
+($m\ddot{x} + b\dot{x} + kx = F(t)$), com o dicionário
+
+| Mecânica | Elétrica |
+|---|---|
+| massa $m$ | indutância $L$ |
+| amortecedor $b$ | resistência $R$ |
+| mola $k$ | $1/C$ |
+| posição $x$ | carga $q$ |
+| força $F(t)$ | f.e.m. $\varepsilon(t)$ |
+
+Tudo o que se sabe de vibrações — transientes, oscilações, amortecimento,
+ressonância — será **reaproveitado** eletronicamente nos tópicos 4.2 a 4.5.
+
+## Livres e forçados: o plano da unidade
+
+- $\varepsilon = 0$ (**resposta livre**): o circuito gasta a energia inicial dos seus
+  armazenadores — exponenciais (4.2) ou oscilações (4.3), conforme quem estiver
+  presente;
+- $\varepsilon(t) \neq 0$ (**resposta forçada**): degrau CC (transientes de
+  energização, 4.2) ou senoide CA (o regime da rede de bordo — fasores, 4.4, e
+  ressonância, 4.5).
+
+Solução geral = particular (regime) + homogênea (transiente), com constantes fixadas
+pelas condições iniciais — que a física dita: **corrente de indutor e tensão de
+capacitor não saltam** (custaria potência infinita).
+
+::: {.callout-warning}
+**Erro clássico:** montar a EDO misturando $q$ e $i$ sem compromisso. Escolha **uma**
+variável (a carga $q$, tipicamente), escreva tudo nela ($i = dq/dt$), e só
+reinterprete no final. Metade dos erros de RLC são de contabilidade, não de física.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Anime.js (tabela Q4 — sequência passo a passo): montagem da
+     EDO termo a termo sobre o desenho do circuito (cada elemento "deposita" seu
+     termo na equação), com o paralelo mecânico massa-mola-amortecedor lado a lado.
+     Paridade matplotlib no {python}: tabela-figura do dicionário mecânico-elétrico. -->

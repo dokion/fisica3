@@ -1,0 +1,96 @@
+---
+title: "4.6 — Transformadores"
+categories: [UE4, OE4.6-B2]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 4.6 [B2] Apresentar os princípios dos transformadores e descrever o seu
+            funcionamento
+            → naval: Transformadores de distribuição de bordo (440/220/115 V;
+              delta-delta, delta-estrela)
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 59-60 >}}
+
+O gerador entrega 440 V; a tomada da acomodação dá 220 ou 115 V; nada gira, nada
+faísca, quase nada esquenta entre um e outro. O transformador — duas bobinas e um
+núcleo de ferro — é a máquina estática que faz a rede de bordo existir em vários
+andares de tensão, e é a razão histórica de a distribuição ser em CA.
+
+## O princípio {{< ra OE4.6 B2 >}}
+
+É a **indutância mútua** (3.8) levada ao limite: primário e secundário enrolados no
+mesmo núcleo ferromagnético, que confina o fluxo (como o toroide do 3.4) e o obriga a
+atravessar as duas bobinas. O primário, em CA, cria fluxo alternado; Faraday induz em
+**cada espira** (das duas bobinas) a mesma f.e.m. $d\Phi_B/dt$. Logo:
+
+$$\frac{V_2}{V_1} = \frac{N_2}{N_1}$$
+
+— a tensão escala com o número de espiras. **Abaixador** ($N_2 < N_1$): 440 → 115 V
+para iluminação e tomadas; **elevador**: saída de geradores para distribuição em
+média tensão (6,6 kV) nos navios grandes.
+
+Num transformador ideal (sem perdas), a potência atravessa intacta:
+
+$$V_1 I_1 = V_2 I_2 \qquad\Longrightarrow\qquad \frac{I_2}{I_1} = \frac{N_1}{N_2}$$
+
+Baixar a tensão **sobe** a corrente na mesma razão — o secundário de 115 V carrega
+quase 4× a corrente do primário de 440 V, e os condutores engrossam junto (efeito
+Joule, 2.3, cobrando o $i^2$).
+
+Como o princípio é $d\Phi/dt$, **transformador não funciona em CC**: fluxo constante
+não induz nada (o aviso do 3.5) — pior, sem a reatância o primário vira quase
+curto-circuito. É a razão física de a distribuição de bordo ser CA.
+
+## O transformador real
+
+- **Perdas no cobre**: $Ri^2$ dos enrolamentos;
+- **Perdas no ferro**: correntes de Foucault (3.6 — por isso o núcleo é **laminado**)
+  e histerese (4.10 — por isso o aço do núcleo é "mole");
+- Ainda assim, rendimentos de 95–99%: a máquina elétrica mais eficiente que existe;
+- **Refrigeração**: os de bordo são tipicamente **a seco, resfriados a ar** — o fato
+  literal do extrato ("transformers on ships are usually air-cooled", 7.04 §2.1.1.4
+  obj.3.1), em contraste com os grandes transformadores a óleo de terra (óleo +
+  navio = risco que se evita).
+
+**Trifásicos e as ligações delta/estrela** (obj.3.2 do extrato): três pares de
+enrolamentos combinados em **Δ (delta)** ou **Y (estrela)**. A distribuição de bordo
+típica usa **delta–delta** (sem neutro, robusta: com um enrolamento avariado ainda
+opera em "delta aberto" com capacidade reduzida) ou **delta–estrela** (o Y do
+secundário cria o neutro para os 115 V de iluminação). O detalhe fino — relação
+adicional de $\sqrt3$ entre tensões de linha e de fase — fica para as disciplinas de
+eletrotécnica; a física é toda deste tópico.
+
+::: {.callout-warning}
+**Erro clássico:** "o transformador amplifica potência". Ele **troca** tensão por
+corrente com a potência (quase) constante — quem sobe V desce I. Não existe almoço
+grátis: a "amplificação" de tensão paga em corrente, e as perdas ainda mordem 1–5%.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Anime.js (tabela Q4 — sequência passo a passo, SP11):
+     animação do fluxo alternado no núcleo acoplando primário→secundário, com
+     N1/N2 ajustável mostrando V2 e I2; etapa final com as ligações Δ-Δ e Δ-Y de
+     bordo. Paridade matplotlib no {python}: V2/V1 × N2/N1. -->
+
+::: {.sp}
+Um transformador de iluminação 440/115 V alimenta 40 kW de cargas no secundário
+(fp ≈ 1; despreze perdas).
+
+**(a) Modelagem:** ideal: $V_1I_1 = V_2I_2$; razão de espiras = razão de tensões.
+
+**(b) Desenvolvimento:**
+$$\frac{N_1}{N_2} = \frac{440}{115} = 3{,}83
+\qquad
+I_2 = \frac{40\,000}{115} = 348\,\text{A}
+\qquad
+I_1 = \frac{40\,000}{440} = 90{,}9\,\text{A}$$
+
+**(c) Resultado:** o mesmo fluxo de energia é 91 A no andar de 440 V e 348 A no de
+115 V.
+
+**(d) Análise crítica:** os 348 A do secundário ditam barramentos e proteção do
+quadro de iluminação — o "lado fraco" em tensão é o lado forte em corrente. E o
+inverso explica a média tensão: os mesmos 40 kW em 6,6 kV seriam 6 A — cabos finos,
+perdas ínfimas. Distribuir alto e consumir baixo é o teorema do transformador
+aplicado à arquitetura elétrica do navio inteiro.
+:::

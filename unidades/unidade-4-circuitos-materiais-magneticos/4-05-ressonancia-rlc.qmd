@@ -1,0 +1,78 @@
+---
+title: "4.5 — Ressonância no circuito R-L-C"
+categories: [UE4, OE4.5-B4]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 4.5 [B4] Analisar a ressonância em circuitos RLC
+            → naval: Sintonia de antenas e filtros de rádio; sobretensões de
+              ressonância
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 57-58 >}}
+
+O tópico 4.3 achou a frequência natural do LC; o 4.4 mostrou que $X_L$ cresce com a
+frequência e $X_C$ decresce. Este tópico pergunta o inevitável: o que acontece quando
+a fonte CA excita o circuito **exatamente onde** as duas reatâncias empatam? Resposta:
+o circuito responde com o máximo que R permitir — para o bem (sintonia) e para o mal
+(sobretensões).
+
+## A condição de ressonância {{< ra OE4.5 B4 >}}
+
+Na série RLC, $Z = \sqrt{R^2 + (X_L - X_C)^2}$ é mínima quando $X_L = X_C$:
+
+$$\omega L = \frac{1}{\omega C}
+\qquad\Longrightarrow\qquad
+\boxed{\omega_{\text{res}} = \frac{1}{\sqrt{LC}} = \omega_0}$$
+
+— a mesma frequência natural do 4.3, agora como **frequência de máxima resposta**.
+Na ressonância:
+
+- $Z = R$ (mínima): a corrente é máxima, $I = V/R$, **em fase** com a tensão
+  ($\varphi = 0$, fp = 1);
+- As reatâncias não somem — **cancelam-se**: as tensões em L e em C são iguais e
+  opostas, cada uma valendo $Q$ vezes a da fonte (abaixo);
+- Longe de $\omega_0$, $Z$ cresce e a resposta cai: a curva $I(\omega)$ é um **pico**
+  centrado em $\omega_0$.
+
+## O fator de qualidade Q
+
+A largura do pico é governada por quem dissipa:
+
+$$Q = \frac{\omega_0 L}{R} = \frac{1}{R}\sqrt{\frac{L}{C}}
+\qquad
+\Delta\omega_{\text{meia-potência}} \approx \frac{\omega_0}{Q}$$
+
+$Q$ alto (R pequeno) = pico estreito = **seletividade**: o receptor sintoniza o canal
+16 e rejeita o 17. $Q$ baixo = pico largo = resposta mansa. E $Q$ tem uma segunda
+leitura, perigosa: na ressonância,
+
+$$V_L = V_C = Q \times V_{\text{fonte}}$$
+
+— um RLC com $Q = 50$ ligado a 10 V desenvolve **500 V** sobre o capacitor. Análises
+de rede real cuidam para que capacitores de correção de fator de potência não formem,
+com a indutância de transformadores, um ressonante afinado num harmônico da rede: as
+sobretensões de ressonância queimam isolamento sem nenhuma "sobretensão" da fonte.
+
+É o mesmo fenômeno das velocidades críticas de FIS-1/FIS-2 (dicionário do 4.1:
+$Q$ elétrico = ressonância mecânica com pouco amortecimento) — a física é uma; os
+estragos, específicos de cada uniforme.
+
+## Sintonia na prática
+
+O par (4.3 + 4.5) fecha o projeto do estágio de entrada de um receptor: $LC$ escolhe
+**onde** ($f_0$), $Q$ escolhe **quão estreito**. Antenas também ressoam — o
+comprimento físico afinado à frequência (a antena de VHF de ~1 m ≈ meia onda de
+156 MHz é ressonância eletromagnética espacial, prima da deste tópico).
+
+::: {.callout-warning}
+**Erro clássico:** "na ressonância a impedância é máxima". Na **série**, é mínima
+(corrente máxima); no RLC **paralelo**, é o contrário (impedância máxima, corrente
+mínima da fonte). Diga sempre qual topologia — os dois casos convivem no mesmo
+receptor.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Plotly (tabela Q4): curva I(f) do RLC série com sliders de
+     R (variando Q — pico afinando/alargando), L e C (pico deslizando); marcador das
+     tensões V_L = Q·V_fonte na ressonância; sobrepor dois "canais" próximos para
+     visualizar seletividade. Paridade matplotlib no {python}. -->

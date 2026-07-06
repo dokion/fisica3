@@ -1,0 +1,73 @@
+---
+title: "4.10 — Circuitos magnéticos: histerese"
+categories: [UE4, OE4.10-B1]
+---
+
+<!-- ═══ OBJETIVOS DESTE TÓPICO — fonte: _docs/FIS_3_RA.md (não editar) ═══
+OE 4.10 [B1] Conceituar o fenômeno de histerese
+             → naval: Magnetismo residual do casco; perdas por histerese em núcleos
+               de máquinas
+═══════════════════════════════════════════════════════════════════════ -->
+
+{{< aula 67-68 >}}
+
+Desligue o campo e o ferro não volta ao zero: ele **lembra**. Essa memória — a
+histerese — é ao mesmo tempo o que torna possível o ímã permanente, o que aquece
+núcleos de transformador 60 vezes por segundo, e o que faz um casco de navio sair do
+estaleiro com um rumo gravado no aço. É o fecho perfeito da unidade e do curso.
+
+## O laço de histerese {{< ra OE4.10 B1 >}}
+
+Leve um ferromagnético virgem por um ciclo completo de campo aplicado (H crescente,
+decrescente, invertido, de volta) medindo o campo $B$ resultante no material. O
+gráfico $B \times H$ não retraça o caminho — forma um **laço**, com três pontos
+notáveis:
+
+- **Saturação**: todos os domínios (4.9) alinhados — aumentar H quase não aumenta B;
+- **Remanência** $B_r$: o campo que **sobra** quando H volta a zero — a memória; é o
+  que faz do ferro duro um ímã permanente;
+- **Campo coercitivo** $H_c$: o campo **reverso** necessário para zerar B — a medida
+  da teimosia.
+
+A distinção duro × mole do tópico 4.9 é a geometria do laço: ferro **mole** = laço
+estreito ($B_r$ e $H_c$ pequenos — magnetiza e esquece fácil); ferro **duro** = laço
+gordo (lembra e resiste).
+
+## A área do laço é energia
+
+Percorrer o laço custa trabalho — mover fronteiras de domínio dissipa (um atrito
+interno magnético). Resultado central:
+
+$$w_{\text{ciclo}} = \oint H\,dB \;=\; \text{área do laço} \qquad [\text{J/m}^3\ \text{por ciclo}]$$
+
+Num núcleo de transformador ou motor em 60 Hz, o material percorre o laço **60 vezes
+por segundo**: perdas por histerese ∝ área × frequência × volume. Por isso núcleos
+são de aço-silício de **laço estreitíssimo** (grão orientado), e por isso as "perdas
+no ferro" do 4.6 têm duas parcelas: histerese (este tópico) + Foucault (3.6) — as
+duas combatidas por metalurgia e laminação, respectivamente.
+
+## O casco que lembra: o fecho naval
+
+O navio em construção é um ferromagnético sob campo (a Terra) e sob marteladas,
+soldas e vibração — que ajudam os domínios a se acomodarem alinhados. Meses de
+estaleiro no mesmo aproamento **gravam** uma magnetização permanente (a remanência do
+casco): o navio nasce com "assinatura magnética" e com a componente fixa do desvio do
+compasso (4.9). A histerese explica ainda por que essa componente **muda lentamente**
+ao longo da vida (viagens batendo em mares grossos = ciclos parciais de H
+reacomodando domínios) — e por que a curva de desvios se refaz periodicamente e após
+grandes reparos ou raios.
+
+O mesmo conceito, dobrado para o outro lado, é a **memória útil**: gravação magnética
+e ímãs de máquinas síncronas modernas são remanência de projeto.
+
+::: {.callout-warning}
+**Erro clássico:** confundir os eixos e as grandezas do laço — $H$ (causa: o campo
+das correntes livres, A/m) com $B$ (efeito total no material, T). A remanência é o
+**B com H zero**; o coercitivo é o **H com B zero**. Trocar os dois inverte o
+diagnóstico de um material.
+:::
+
+<!-- SIMULAÇÃO SUGERIDA: Plotly (tabela Q4): laço B×H traçado ao vivo com H senoidal;
+     slider de material (mole ↔ duro) mudando B_r, H_c e a ÁREA (perda/ciclo
+     exibida em J/m³); contador de perda acumulada a 60 Hz. Paridade matplotlib no
+     {python}: laços mole × duro sobrepostos. -->
